@@ -18,7 +18,14 @@
 
 
 ## 📸 **Capturas de Pantalla**
-📷 
+📷 ![Captura de pantalla 2025-02-24 205603](https://github.com/user-attachments/assets/f7a7c943-d178-45bb-bb7d-4f8924ed2521)
+📷 ![Captura de pantalla 2025-02-24 210001](https://github.com/user-attachments/assets/f42657e5-b20c-45aa-a875-687cd57b37c1)
+📷 ![Captura de pantalla 2025-02-24 205952](https://github.com/user-attachments/assets/8f377c99-d81a-4011-bc86-2701f239900e)
+📷 ![Captura de pantalla 2025-02-24 205906](https://github.com/user-attachments/assets/37f00362-3310-4951-b712-b5389a3a534f)
+📷 ![Captura de pantalla 2025-02-24 205849](https://github.com/user-attachments/assets/4d775cb6-b93d-4832-ae43-db35f2508d73)
+📷 ![Captura de pantalla 2025-02-24 205839](https://github.com/user-attachments/assets/a830f904-95fd-4ce1-8b6a-e780e2a43368)
+📷 ![Captura de pantalla 2025-02-24 205820](https://github.com/user-attachments/assets/d55ffa2a-ca2d-46fe-a1e0-9fe930001ba3)
+
 
 ## 🚀 **Tecnologías Utilizadas**
 🔹 **Lenguaje**: Kotlin  
