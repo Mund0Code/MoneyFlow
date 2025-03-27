@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mundocode.moneyflow.database.Transaccion
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -45,7 +46,7 @@ import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = viewModel(), navController: NavHostController) {
+fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), navController: NavHostController) {
     val totalIngresos by viewModel.totalIngresos.collectAsState(initial = 0.0)
     val totalGastos by viewModel.totalGastos.collectAsState(initial = 0.0)
     val flujoDeCaja by viewModel.flujoDeCaja.collectAsState(initial = 0.0)
@@ -138,7 +139,7 @@ fun CardPrediccionFinanzas(predIngresos: Double, predGastos: Double) {
 
 @Composable
 fun FiltroPorCategoria(
-    viewModel: HomeViewModel = viewModel(),
+    viewModel: HomeViewModel = hiltViewModel(),
     onCategoriaSeleccionada: (String) -> Unit,
 ) {
     val categorias by viewModel.categoriasDisponibles.collectAsState(initial = listOf("Todas"))

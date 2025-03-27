@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
@@ -36,7 +37,7 @@ import java.text.NumberFormat
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetalleFacturaScreen(
-    viewModel: FacturaViewModel = viewModel(),
+    viewModel: FacturaViewModel = hiltViewModel(),
     navController: NavHostController,
     facturaId: String
 ) {

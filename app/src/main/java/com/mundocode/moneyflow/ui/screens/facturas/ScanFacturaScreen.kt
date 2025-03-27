@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import androidx.navigation.NavHostController
@@ -33,7 +34,7 @@ import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScanFacturaScreen(viewModel: OCRViewModel = viewModel(), navController: NavHostController) {
+fun ScanFacturaScreen(viewModel: OCRViewModel = hiltViewModel(), navController: NavHostController) {
     val context = LocalContext.current
     val facturaTexto by viewModel.facturaTexto.collectAsState()
     var imageUri by remember { mutableStateOf<Uri?>(null) }

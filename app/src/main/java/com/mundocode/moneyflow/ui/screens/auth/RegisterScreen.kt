@@ -1,9 +1,7 @@
 package com.mundocode.moneyflow.ui.screens.auth
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,12 +18,10 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,17 +38,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 
 @Composable
-fun RegisterScreen(viewModel: AuthViewModel = viewModel(), navController: NavController) {
+fun RegisterScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    var selectedRole by remember { mutableStateOf("Usuario") }
     var error by remember { mutableStateOf<String?>(null) }
-    val roles = listOf("Usuario", "Admin", "Invitado")
 
     Scaffold { paddingValues ->
         Box(
@@ -65,7 +60,7 @@ fun RegisterScreen(viewModel: AuthViewModel = viewModel(), navController: NavCon
             RegisterContent(
                 registrarUsuario = {
                     if (password == confirmPassword) {
-                        viewModel.registrarUsuario(email, password, selectedRole) { success ->
+                        viewModel.registrarUsuario(email, password) { success ->
                             if (success) {
                                 navController.navigate("home")
                             } else {
@@ -79,13 +74,10 @@ fun RegisterScreen(viewModel: AuthViewModel = viewModel(), navController: NavCon
                 email = email,
                 password = password,
                 confirmPassword = confirmPassword,
-                selectedRole = selectedRole,
                 error = error,
                 onValueChangeEmail = { email = it },
                 onValueChangePassword = { password = it },
                 onValueChangeConfirmPassword = { confirmPassword = it },
-                onRoleSelected = { selectedRole = it },
-                roles = roles,
                 navController = { navController.navigate("login") }
             )
         }
@@ -98,13 +90,10 @@ fun RegisterContent(
     email: String,
     password: String,
     confirmPassword: String,
-    selectedRole: String,
     error: String?,
     onValueChangeEmail: (String) -> Unit,
     onValueChangePassword: (String) -> Unit,
     onValueChangeConfirmPassword: (String) -> Unit,
-    onRoleSelected: (String) -> Unit,
-    roles: List<String>,
     navController: () -> Unit
 ) {
     Card(
@@ -171,34 +160,6 @@ fun RegisterContent(
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth()
             )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Selector de Rol de Usuario
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.Start
-            ) {
-                Text("Seleccionar Rol", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    roles.forEach { role ->
-                        OutlinedButton(
-                            onClick = { onRoleSelected(role) },
-                            border = BorderStroke(1.dp, if (selectedRole == role) Color.Blue else Color.Gray),
-                            colors = ButtonDefaults.outlinedButtonColors(
-                                contentColor = if (selectedRole == role) Color.Blue else Color.Gray
-                            )
-                        ) {
-                            Text(role)
-                        }
-                    }
-                }
-            }
 
             // Mensaje de error
             error?.let {

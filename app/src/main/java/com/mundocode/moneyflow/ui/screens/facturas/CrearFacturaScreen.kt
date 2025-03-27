@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
@@ -35,7 +36,7 @@ import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CrearFacturaScreen(viewModel: FacturaViewModel = viewModel(), navController: NavHostController) {
+fun CrearFacturaScreen(viewModel: FacturaViewModel = hiltViewModel(), navController: NavHostController) {
     var clienteNombre by remember { mutableStateOf("") }
     var montoTotal by remember { mutableStateOf("") }
     var detalles by remember { mutableStateOf("") }

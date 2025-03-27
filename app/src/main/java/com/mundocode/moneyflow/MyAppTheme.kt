@@ -7,9 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun MyAppTheme(themeViewModel: ThemeViewModel, content: @Composable () -> Unit) {
+fun MyAppTheme(themeViewModel: ThemeViewModel = hiltViewModel(), content: @Composable () -> Unit) {
     val isDarkMode by themeViewModel.isDarkMode.collectAsState()
     val selectedColorIndex by themeViewModel.selectedColorIndex.collectAsState()
 

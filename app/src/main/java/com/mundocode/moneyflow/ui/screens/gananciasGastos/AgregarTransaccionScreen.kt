@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
@@ -40,7 +41,7 @@ import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AgregarTransaccionScreen(viewModel: TransaccionViewModel = viewModel(), navController: NavHostController) {
+fun AgregarTransaccionScreen(viewModel: TransaccionViewModel = hiltViewModel(), navController: NavHostController) {
     var tipo by remember { mutableStateOf("Ingreso") }
     var monto by remember { mutableStateOf("") }
     var categoria by remember { mutableStateOf("") }

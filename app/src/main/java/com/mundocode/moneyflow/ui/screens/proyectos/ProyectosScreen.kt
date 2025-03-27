@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
@@ -41,7 +42,7 @@ import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProyectosScreen(viewModel: ProyectoViewModel = viewModel(), navController: NavHostController) {
+fun ProyectosScreen(viewModel: ProyectoViewModel = hiltViewModel(), navController: NavHostController) {
     val proyectos by viewModel.proyectos.collectAsState(initial = emptyList())
     var nombre by remember { mutableStateOf("") }
     var descripcion by remember { mutableStateOf("") }

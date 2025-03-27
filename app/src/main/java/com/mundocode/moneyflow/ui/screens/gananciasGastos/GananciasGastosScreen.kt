@@ -53,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.itextpdf.kernel.pdf.PdfDocument
@@ -77,7 +78,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GananciasGastosScreen(viewModel: TransaccionViewModel = viewModel(), navController: NavHostController) {
+fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), navController: NavHostController) {
     val transacciones by viewModel.transacciones.collectAsState(initial = emptyList())
     var mostrarDialogo by remember { mutableStateOf(false) }
     val context = LocalContext.current // Obtener el contexto para mostrar Toast

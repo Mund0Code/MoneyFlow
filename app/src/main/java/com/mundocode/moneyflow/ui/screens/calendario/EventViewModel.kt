@@ -2,30 +2,33 @@ package com.mundocode.moneyflow.ui.screens.calendario
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.mundocode.moneyflow.database.AppDatabase
 import com.mundocode.moneyflow.database.Evento
+import com.mundocode.moneyflow.database.EventoDao
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class EventoViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class EventoViewModel @Inject constructor(
+    private val eventoDao: EventoDao
+) : ViewModel() {
 
-    private val db = Room.databaseBuilder(
-        application,
-        AppDatabase::class.java, "app-database"
-    ).build()
-
-    private val eventoDao = db.eventoDao()
     val eventos: Flow<List<Evento>> = eventoDao.getAllEventos()
 
     fun agregarEvento(titulo: String, fecha: String, selectedCategoria: String) {
         viewModelScope.launch {
-            eventoDao.insertEvent(Evento(
-                titulo = titulo,
-                fecha = fecha,
-                categoria = selectedCategoria
-            ))
+            eventoDao.insertEvent(
+                Evento(
+                    titulo = titulo,
+                    fecha = fecha,
+                    categoria = selectedCategoria
+                )
+            )
         }
     }
 
@@ -40,5 +43,4 @@ class EventoViewModel(application: Application) : AndroidViewModel(application) 
             eventoDao.updateEvent(evento)
         }
     }
-
 }

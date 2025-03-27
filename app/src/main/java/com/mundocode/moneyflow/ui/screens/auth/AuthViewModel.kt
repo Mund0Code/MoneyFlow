@@ -1,57 +1,21 @@
 package com.mundocode.moneyflow.ui.screens.auth
 
-import android.app.Application
-import android.content.Context
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mundocode.moneyflow.core.User
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-
-class AuthViewModel(application: Application) : AndroidViewModel(application) {
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
-    private val _userRole = MutableLiveData<String?>()
-    val userRole: LiveData<String?> = _userRole
-
-    private val sharedPreferences = application.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val auth: FirebaseAuth,
+    private val firestore: FirebaseFirestore
+) : ViewModel() {
 
     fun obtenerRolUsuario() {
         val userId = auth.currentUser?.uid
         userId?.let {
-            db.collection("users").document(it).get()
-                .addOnSuccessListener { document ->
-                    _userRole.value = document.getString("role") ?: "Usuario"
-                }
-                .addOnFailureListener {
-                    _userRole.value = "Usuario"
-                }
-        }
-    }
-
-
-
-    fun cambiarRol(userId: String, newRole: String) {
-        db.collection("users").document(userId)
-            .update("role", newRole)
-            .addOnSuccessListener {
-                obtenerRolUsuario()
-            }
-    }
-
-    fun obtenerUsuarios(onResult: (List<User>) -> Unit) {
-        db.collection("users").get().addOnSuccessListener { result ->
-            val users = result.documents.map { doc ->
-                User(
-                    id = doc.id,
-                    email = doc.getString("email") ?: "",
-                    role = doc.getString("role") ?: "user"
-                )
-            }
-            onResult(users)
+            firestore.collection("users").document(it).get()
         }
     }
 
@@ -59,7 +23,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    obtenerRolUsuario() // ✅ Obtener el rol después del login
+                    obtenerRolUsuario()
                     onResult(true)
                 } else {
                     onResult(false)
@@ -70,7 +34,6 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     fun registrarUsuario(
         email: String,
         password: String,
-        role: String,
         onResult: (Boolean) -> Unit
     ) {
         auth.createUserWithEmailAndPassword(email, password)
@@ -78,8 +41,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
                 if (task.isSuccessful) {
                     val userId = auth.currentUser?.uid
                     userId?.let {
-                        val userData = mapOf("role" to role, "email" to email)
-                        db.collection("users").document(it).set(userData)
+                        val userData = mapOf("email" to email)
+                        firestore.collection("users").document(it).set(userData)
                             .addOnSuccessListener { onResult(true) }
                             .addOnFailureListener { onResult(false) }
                     }
@@ -87,9 +50,5 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
                     onResult(false)
                 }
             }
-    }
-
-    fun cerrarSesion() {
-        auth.signOut()
     }
 }

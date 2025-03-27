@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,6 +15,9 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.mundocode.moneyflow.database.AppDatabase
 import com.mundocode.moneyflow.database.Transaccion
+import com.mundocode.moneyflow.database.TransaccionDao
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,19 +26,18 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
-class OCRViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class OCRViewModel @Inject constructor(
+    private val transaccionDao: TransaccionDao
+) : ViewModel() {
+
+    private val db = FirebaseFirestore.getInstance()
+
     private val _facturaTexto = MutableStateFlow<String?>(null)
     val facturaTexto: StateFlow<String?> = _facturaTexto
 
     private val _productosEscaneados = MutableStateFlow<List<String>>(emptyList())
     val productosEscaneados: StateFlow<List<String>> = _productosEscaneados
-
-    private val db = FirebaseFirestore.getInstance()
-    private val appDatabase = Room.databaseBuilder(
-        application,
-        AppDatabase::class.java, "app-database"
-    ).build()
-    private val transaccionDao = appDatabase.transaccionDao()
 
     /**
      * Procesa una imagen usando ML Kit OCR.
@@ -54,7 +57,6 @@ class OCRViewModel(application: Application) : AndroidViewModel(application) {
 
     fun procesarImagenOCR(context: Context, uri: Uri) {
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-
         val image = InputImage.fromFilePath(context, uri)
 
         recognizer.process(image)
@@ -65,8 +67,6 @@ class OCRViewModel(application: Application) : AndroidViewModel(application) {
                 _facturaTexto.value = "Error al procesar la imagen"
             }
     }
-
-
 
     /**
      * Escanea un código de barras en una imagen.
@@ -89,7 +89,7 @@ class OCRViewModel(application: Application) : AndroidViewModel(application) {
      * Guarda el gasto extraído en Firestore y Room.
      */
     fun guardarGasto(texto: String, productos: List<String>) {
-        val montoRegex = Regex("\\d+[.,]?\\d*") // Busca números en el texto
+        val montoRegex = Regex("\\d+[.,]?\\d*")
         val montoEncontrado = montoRegex.find(texto)?.value?.replace(",", ".")?.toDoubleOrNull() ?: 0.0
 
         val transaccion = Transaccion(
@@ -100,7 +100,7 @@ class OCRViewModel(application: Application) : AndroidViewModel(application) {
         )
 
         // Guardar en Firestore
-        db.collection("transacciones").document(transaccion.id.toString()).set(transaccion)
+        db.collection("transacciones").document(transaccion.id).set(transaccion)
 
         // Guardar en Room
         viewModelScope.launch {

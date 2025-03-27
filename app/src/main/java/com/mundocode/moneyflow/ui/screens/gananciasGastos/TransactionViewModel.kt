@@ -6,12 +6,17 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mundocode.moneyflow.database.AppDatabase
 import com.mundocode.moneyflow.database.Transaccion
+import com.mundocode.moneyflow.database.TransaccionDao
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.firstOrNull
@@ -21,34 +26,38 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
-class TransaccionViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class TransaccionViewModel @Inject constructor(
+    private val transaccionDao: TransaccionDao,
+    @ApplicationContext context: Context
+) : ViewModel() {
 
-    private val db = Room.databaseBuilder(
-        application,
-        AppDatabase::class.java, "app-database"
-    ).build()
-
-    private val transaccionDao = db.transaccionDao()
     private val firestore = FirebaseFirestore.getInstance()
-    private val connectivityManager = application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     val transacciones: Flow<List<Transaccion>> = transaccionDao.getAllTransacciones()
+
     private val _transaccionesPendientes = MutableStateFlow<List<Transaccion>>(emptyList())
 
     init {
+        // Escuchar transacciones no sincronizadas
         viewModelScope.launch {
             transaccionDao.getTransaccionesNoSincronizadas().collect { lista ->
                 _transaccionesPendientes.value = lista
             }
         }
 
-        // 🔹 Detectar cambios en la conexión
+        // Registrar callback de red
         val networkRequest = NetworkRequest.Builder().build()
-        connectivityManager.registerNetworkCallback(networkRequest, object : ConnectivityManager.NetworkCallback() {
-            override fun onAvailable(network: Network) {
-                sincronizarConFirestore()
+        connectivityManager.registerNetworkCallback(
+            networkRequest,
+            object : ConnectivityManager.NetworkCallback() {
+                override fun onAvailable(network: Network) {
+                    sincronizarConFirestore()
+                }
             }
-        })
+        )
     }
 
     fun agregarTransaccion(tipo: String, monto: Double, categoria: String) {
@@ -59,7 +68,7 @@ class TransaccionViewModel(application: Application) : AndroidViewModel(applicat
                 monto = monto,
                 fecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 categoria = categoria,
-                syncStatus = false // 🔹 No está sincronizada aún
+                syncStatus = false
             )
             transaccionDao.insertar(nuevaTransaccion)
             sincronizarConFirestore()
@@ -68,8 +77,8 @@ class TransaccionViewModel(application: Application) : AndroidViewModel(applicat
 
     private fun sincronizarConFirestore() {
         viewModelScope.launch {
-            val transaccionesPendientes = transaccionDao.getTransaccionesNoSincronizadas().firstOrNull() ?: emptyList()
-            for (transaccion in transaccionesPendientes) {
+            val pendientes = transaccionDao.getTransaccionesNoSincronizadas().firstOrNull() ?: emptyList()
+            for (transaccion in pendientes) {
                 val usuarioId = FirebaseAuth.getInstance().currentUser?.uid ?: continue
                 firestore.collection("usuarios")
                     .document(usuarioId)
@@ -78,7 +87,7 @@ class TransaccionViewModel(application: Application) : AndroidViewModel(applicat
                     .set(transaccion)
                     .addOnSuccessListener {
                         viewModelScope.launch {
-                            transaccionDao.marcarComoSincronizada(transaccion.id) // 🔹 Marcar como sincronizada
+                            transaccionDao.marcarComoSincronizada(transaccion.id)
                         }
                     }
             }
@@ -88,7 +97,6 @@ class TransaccionViewModel(application: Application) : AndroidViewModel(applicat
     fun eliminarTransaccion(transaccion: Transaccion) {
         viewModelScope.launch {
             transaccionDao.deleteTransaccion(transaccion)
-            // 🔹 También eliminar de Firestore
             val usuarioId = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
             firestore.collection("usuarios")
                 .document(usuarioId)

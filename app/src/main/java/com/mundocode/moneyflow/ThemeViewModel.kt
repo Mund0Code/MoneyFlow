@@ -2,16 +2,21 @@ package com.mundocode.moneyflow
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mundocode.moneyflow.core.SettingsDataStore
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class ThemeViewModel(application: Application) : AndroidViewModel(application) {
-    private val settingsDataStore = SettingsDataStore(application)
+@HiltViewModel
+class ThemeViewModel @Inject constructor(
+    private val settingsDataStore: SettingsDataStore
+) : ViewModel() {
 
     private val _isDarkMode = MutableStateFlow(false)
     val isDarkMode = _isDarkMode.asStateFlow()
@@ -40,3 +45,4 @@ class ThemeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 }
+

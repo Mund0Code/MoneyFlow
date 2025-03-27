@@ -1,21 +1,19 @@
 package com.mundocode.moneyflow.ui.screens.proyectos
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
-import com.mundocode.moneyflow.database.AppDatabase
 import com.mundocode.moneyflow.database.Proyecto
+import com.mundocode.moneyflow.database.ProyectoDao
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class ProyectoViewModel(application: Application) : AndroidViewModel(application) {
-    private val db = Room.databaseBuilder(
-        application,
-        AppDatabase::class.java, "app-database"
-    ).build()
+@HiltViewModel
+class ProyectoViewModel @Inject constructor(
+    private val proyectoDao: ProyectoDao
+) : ViewModel() {
 
-    private val proyectoDao = db.proyectoDao()
     val proyectos: Flow<List<Proyecto>> = proyectoDao.getAllProyectos()
 
     fun agregarProyecto(
@@ -26,13 +24,15 @@ class ProyectoViewModel(application: Application) : AndroidViewModel(application
         estado: String
     ) {
         viewModelScope.launch {
-            proyectoDao.insertProyecto(Proyecto(
-                nombre = nombre,
-                descripcion = descripcion,
-                fechaInicio = fechaInicio,
-                fechaFin = fechaFin,
-                estado = estado
-            ))
+            proyectoDao.insertProyecto(
+                Proyecto(
+                    nombre = nombre,
+                    descripcion = descripcion,
+                    fechaInicio = fechaInicio,
+                    fechaFin = fechaFin,
+                    estado = estado
+                )
+            )
         }
     }
 
@@ -48,5 +48,4 @@ class ProyectoViewModel(application: Application) : AndroidViewModel(application
             proyectoDao.updateProyecto(proyecto)
         }
     }
-
 }

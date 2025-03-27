@@ -12,4 +12,6 @@ data class Transaccion(
     val fecha: String,
     val categoria: String? = null,
     val syncStatus: Boolean = false // 🔹 Nueva propiedad para saber si está sincronizada
-)
+) {
+    constructor() : this("", "", 0.0, "", null, false) // ✅ Constructor sin argumentos
+}

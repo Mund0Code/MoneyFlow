@@ -1,20 +1,19 @@
 package com.mundocode.moneyflow.ui.screens.home
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import com.mundocode.moneyflow.database.AppDatabase
 import com.mundocode.moneyflow.database.Transaccion
+import com.mundocode.moneyflow.database.TransaccionDao
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
-    private val transaccionDao = Room.databaseBuilder(
-        application,
-        AppDatabase::class.java, "app-database"
-    ).build().transaccionDao()
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val transaccionDao: TransaccionDao
+) : ViewModel() {
 
     private val _prediccionIngresos = MutableStateFlow(0.0)
     val prediccionIngresos: StateFlow<Double> = _prediccionIngresos
@@ -44,14 +43,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             transaccionDao.getAllTransacciones().collect { lista ->
                 _transaccionesFiltradas.value = lista
-                actualizarCategorias(lista) // 🔹 Generar dinámicamente las categorías
+                actualizarCategorias(lista)
             }
         }
     }
 
     private fun actualizarCategorias(transacciones: List<Transaccion>) {
         val categoriasUnicas = transacciones.mapNotNull { it.categoria }.distinct().sorted()
-        _categoriasDisponibles.value = listOf("Todas") + categoriasUnicas // Siempre incluir "Todas"
+        _categoriasDisponibles.value = listOf("Todas") + categoriasUnicas
     }
 
     fun filtrarTransacciones(categoria: String) {
@@ -59,11 +58,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             val lista = if (categoria == "Todas") {
                 transaccionDao.getAllTransacciones().firstOrNull() ?: emptyList()
             } else {
-                transaccionDao.getAllTransacciones().firstOrNull()?.filter { it.categoria?.trim() == categoria.trim() } ?: emptyList()
+                transaccionDao.getAllTransacciones().firstOrNull()
+                    ?.filter { it.categoria?.trim() == categoria.trim() } ?: emptyList()
             }
             _transaccionesFiltradas.value = lista
         }
     }
 }
-
-

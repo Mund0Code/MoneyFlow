@@ -45,15 +45,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.FragmentActivity
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun LoginScreen(viewModel: AuthViewModel = viewModel(), navController: NavController) {
+fun LoginScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
-    val context = LocalContext.current
-    val activity = context as? FragmentActivity
 
 
     Scaffold { paddingValues ->

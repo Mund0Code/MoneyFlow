@@ -7,7 +7,9 @@ plugins {
     alias(libs.plugins.ktlint.jlleitschuh)
     alias(libs.plugins.ksp)
     id("com.google.gms.google-services") // Agregar esto
+    id("com.google.firebase.crashlytics")
     id("kotlin-android")
+    id("dagger.hilt.android.plugin")
 
 }
 
@@ -25,6 +27,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("D:/Proyectos/MoneyFlow2.jks") // Ruta del keystore
+            storePassword = "98092410"
+            keyAlias = "MoneyFlow2"
+            keyPassword = "98092410"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -33,6 +44,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -43,6 +55,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 
@@ -131,13 +144,25 @@ dependencies {
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
 
     //Gson
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.google.code.gson:gson:2.12.1")
 
     implementation("androidx.biometric:biometric:1.1.0")
 
     implementation("org.slf4j:slf4j-api:2.0.4")
     implementation("org.slf4j:slf4j-simple:1.7.30") // O usa otra implementación como logback
 
+
+    // Timber
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebaseBundle)
+
+    // Dagger Hilt
+    implementation("com.google.dagger:hilt-android:2.55")
+    ksp("com.google.dagger:hilt-compiler:2.55")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
 }
 

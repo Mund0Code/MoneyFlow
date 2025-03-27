@@ -8,15 +8,14 @@
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <!-- Permisos de almacenamiento (solo necesarios en Android 9 o menor) -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <!-- Permite que la app use la cámara, pero no la hace obligatoria -->
     <uses-feature android:name="android.hardware.camera" android:required="false"/>
 
-
-
-
     <application
+        android:name=".MoneyFlowApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

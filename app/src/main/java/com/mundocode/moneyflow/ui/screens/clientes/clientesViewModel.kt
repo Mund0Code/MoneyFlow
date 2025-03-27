@@ -2,25 +2,29 @@ package com.mundocode.moneyflow.ui.screens.clientes
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import com.mundocode.moneyflow.database.AppDatabase
 import com.mundocode.moneyflow.database.Cliente
+import com.mundocode.moneyflow.database.ClienteDao
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-class ClienteViewModel(application: Application) : AndroidViewModel(application) {
-    private val db = Room.databaseBuilder(
-        application,
-        AppDatabase::class.java, "app-database"
-    ).build()
+@HiltViewModel
+class ClienteViewModel @Inject constructor(
+    private val clienteDao: ClienteDao
+) : ViewModel() {
 
-    private val clienteDao = db.clienteDao()
     val clientes: Flow<List<Cliente>> = clienteDao.getAllClientes()
 
     fun agregarCliente(nombre: String, telefono: String, correo: String) {
         viewModelScope.launch {
-            clienteDao.insertCliente(Cliente(nombre = nombre, telefono = telefono, correo = correo))
+            clienteDao.insertCliente(
+                Cliente(nombre = nombre, telefono = telefono, correo = correo)
+            )
         }
     }
 

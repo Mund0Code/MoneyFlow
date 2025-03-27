@@ -38,13 +38,13 @@ fun BottomNavigationBar(navController: NavHostController) {
         BottomNavItem("home", "Inicio", Icons.Default.Home),
         BottomNavItem("clientes", "Clientes", Icons.Default.Person),
         BottomNavItem("calendario", "Calendario", Icons.Default.DateRange),
-        BottomNavItem("proyectos", "Proyectos", Icons.Default.Build),
-        BottomNavItem("ganancias_gastos", "Finanzas", Icons.Default.AttachMoney)
     )
 
     val extraItems = listOf(
         BottomNavItem("facturas", "Facturas", Icons.Default.Receipt),
-        BottomNavItem("transacciones", "Transacciones", Icons.Default.Money)
+        BottomNavItem("transacciones", "Transacciones", Icons.Default.Money),
+        BottomNavItem("ganancias_gastos", "Finanzas", Icons.Default.AttachMoney),
+        BottomNavItem("proyectos", "Proyectos", Icons.Default.Build)
     )
 
     Box(modifier = Modifier.fillMaxWidth()) {

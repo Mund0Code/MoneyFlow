@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.mundocode.moneyflow.database.Factura
@@ -42,7 +43,7 @@ import java.text.NumberFormat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ListaFacturasScreen(viewModel: FacturaViewModel = viewModel(), navController: NavHostController) {
+fun ListaFacturasScreen(viewModel: FacturaViewModel = hiltViewModel(), navController: NavHostController) {
     val context = LocalContext.current
     val facturas by viewModel.facturas.collectAsState(initial = emptyList())
 

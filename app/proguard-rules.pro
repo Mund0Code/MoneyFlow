@@ -24,3 +24,4 @@
 -keep class org.slf4j.** { *; }
 -keep class org.slf4j.impl.** { *; }
 -dontwarn org.slf4j.**
+-keep class com.mundocode.moneyflow.** { *; }

@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.mundocode.moneyflow.ThemeViewModel
@@ -39,8 +40,8 @@ import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalendarScreen(
-    themeViewModel: ThemeViewModel,
-    viewModel: EventoViewModel = viewModel(),
+    themeViewModel: ThemeViewModel = hiltViewModel(),
+    viewModel: EventoViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
     val eventos by viewModel.eventos.collectAsState(initial = emptyList())
