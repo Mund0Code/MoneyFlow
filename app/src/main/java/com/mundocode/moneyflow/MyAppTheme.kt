@@ -15,13 +15,13 @@ fun MyAppTheme(themeViewModel: ThemeViewModel = hiltViewModel(), content: @Compo
     val selectedColorIndex by themeViewModel.selectedColorIndex.collectAsState()
 
     val colorSchemes = listOf(
-        lightColorScheme(primary = Color.Blue, secondary = Color.Cyan),
+        lightColorScheme(primary = Color.Black, secondary = Color.Cyan),
         lightColorScheme(primary = Color.Green, secondary = Color.Yellow),
         lightColorScheme(primary = Color.Red, secondary = Color.Magenta)
     )
 
     val darkColorSchemes = listOf(
-        darkColorScheme(primary = Color.Blue, secondary = Color.Cyan),
+        darkColorScheme(primary = Color.White, secondary = Color.Cyan),
         darkColorScheme(primary = Color.Green, secondary = Color.Yellow),
         darkColorScheme(primary = Color.Red, secondary = Color.Magenta)
     )
