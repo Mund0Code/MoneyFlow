@@ -1,4 +1,4 @@
-package com.mundocode.moneyflow.database
+package com.mundocode.moneyflow.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

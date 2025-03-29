@@ -18,12 +18,14 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.mundocode.moneyflow.R
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -35,16 +37,16 @@ fun BottomNavigationBar(navController: NavHostController) {
     var showMenu by remember { mutableStateOf(false) } // Estado para mostrar el menú emergente
 
     val items = listOf(
-        BottomNavItem("home", "Inicio", Icons.Default.Home),
-        BottomNavItem("clientes", "Clientes", Icons.Default.Person),
-        BottomNavItem("calendario", "Calendario", Icons.Default.DateRange),
+        BottomNavItem("home", stringResource(R.string.home), Icons.Default.Home),
+        BottomNavItem("clientes", stringResource(R.string.clients), Icons.Default.Person),
+        BottomNavItem("calendario", stringResource(R.string.calendar), Icons.Default.DateRange),
     )
 
     val extraItems = listOf(
-        BottomNavItem("facturas", "Facturas", Icons.Default.Receipt),
-        BottomNavItem("transacciones", "Transacciones", Icons.Default.Money),
-        BottomNavItem("ganancias_gastos", "Finanzas", Icons.Default.AttachMoney),
-        BottomNavItem("proyectos", "Proyectos", Icons.Default.Build)
+        BottomNavItem("facturas", stringResource(R.string.invoices), Icons.Default.Receipt),
+        BottomNavItem("transacciones", stringResource(R.string.transactions), Icons.Default.Money),
+        BottomNavItem("ganancias_gastos", stringResource(R.string.finances), Icons.Default.AttachMoney),
+        BottomNavItem("proyectos", stringResource(R.string.projects), Icons.Default.Build)
     )
 
     Box(modifier = Modifier.fillMaxWidth()) {
@@ -62,7 +64,7 @@ fun BottomNavigationBar(navController: NavHostController) {
 
             // Botón de "Más" con menú desplegable
             NavigationBarItem(
-                label = { Text("Más") },
+                label = { Text(stringResource(R.string.more)) },
                 selected = false,
                 onClick = { showMenu = true },
                 icon = { Icon(Icons.Default.MoreHoriz, contentDescription = "Más opciones") }

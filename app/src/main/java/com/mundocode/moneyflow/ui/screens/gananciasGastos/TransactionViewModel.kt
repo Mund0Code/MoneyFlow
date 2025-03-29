@@ -1,19 +1,15 @@
 package com.mundocode.moneyflow.ui.screens.gananciasGastos
 
-import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mundocode.moneyflow.database.AppDatabase
-import com.mundocode.moneyflow.database.Transaccion
-import com.mundocode.moneyflow.database.TransaccionDao
+import com.mundocode.moneyflow.database.daos.TransaccionDao
+import com.mundocode.moneyflow.database.entity.Transaccion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

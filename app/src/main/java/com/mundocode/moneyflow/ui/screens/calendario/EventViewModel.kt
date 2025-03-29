@@ -1,13 +1,9 @@
 package com.mundocode.moneyflow.ui.screens.calendario
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
-import com.mundocode.moneyflow.database.AppDatabase
-import com.mundocode.moneyflow.database.Evento
-import com.mundocode.moneyflow.database.EventoDao
+import com.mundocode.moneyflow.database.daos.EventoDao
+import com.mundocode.moneyflow.database.entity.Evento
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

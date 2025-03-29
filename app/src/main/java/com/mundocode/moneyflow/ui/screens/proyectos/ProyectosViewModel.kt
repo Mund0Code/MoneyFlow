@@ -2,8 +2,8 @@ package com.mundocode.moneyflow.ui.screens.proyectos
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mundocode.moneyflow.database.Proyecto
-import com.mundocode.moneyflow.database.ProyectoDao
+import com.mundocode.moneyflow.database.daos.ProyectoDao
+import com.mundocode.moneyflow.database.entity.Proyecto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

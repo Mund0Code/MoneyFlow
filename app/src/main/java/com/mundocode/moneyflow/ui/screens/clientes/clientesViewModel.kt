@@ -1,13 +1,9 @@
 package com.mundocode.moneyflow.ui.screens.clientes
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
-import com.mundocode.moneyflow.database.AppDatabase
-import com.mundocode.moneyflow.database.Cliente
-import com.mundocode.moneyflow.database.ClienteDao
+import com.mundocode.moneyflow.database.daos.ClienteDao
+import com.mundocode.moneyflow.database.entity.Cliente
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

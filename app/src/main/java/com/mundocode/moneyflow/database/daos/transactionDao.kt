@@ -1,10 +1,11 @@
-package com.mundocode.moneyflow.database
+package com.mundocode.moneyflow.database.daos
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.mundocode.moneyflow.database.entity.Transaccion
 import kotlinx.coroutines.flow.Flow
 
 @Dao

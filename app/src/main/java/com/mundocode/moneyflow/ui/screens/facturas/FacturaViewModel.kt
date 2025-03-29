@@ -1,6 +1,5 @@
 package com.mundocode.moneyflow.ui.screens.facturas
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -13,14 +12,12 @@ import android.net.Uri
 import android.os.Environment
 import android.util.Log
 import androidx.core.content.FileProvider
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mundocode.moneyflow.R
-import com.mundocode.moneyflow.database.AppDatabase
-import com.mundocode.moneyflow.database.Factura
-import com.mundocode.moneyflow.database.FacturaDao
+import com.mundocode.moneyflow.database.entity.Factura
+import com.mundocode.moneyflow.database.daos.FacturaDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers

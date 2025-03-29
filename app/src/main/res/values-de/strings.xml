@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MoneyFlow</string>
+    <string name="home">Home</string>
+    <string name="clients">Kunden</string>
+    <string name="calendar">Kalender</string>
+    <string name="invoices">Rechnungen</string>
+    <string name="transactions">Transaktionen</string>
+    <string name="finances">Finanzen</string>
+    <string name="projects">Projekte</string>
+    <string name="more">mehr</string>
+
+    <!--Login-->
+    <string name="login">Anmeldung</string>
+    <string name="email">E-Mail Adresse</string>
+    <string name="password">Password</string>
+    <string name="no_account">Haben Sie kein Konto?</string>
+    <string name="register">Register</string>
+
+    <!--Register-->
+
+</resources>

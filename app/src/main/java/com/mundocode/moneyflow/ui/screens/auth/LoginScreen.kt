@@ -2,6 +2,7 @@ package com.mundocode.moneyflow.ui.screens.auth
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.mundocode.moneyflow.R
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -30,7 +31,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
@@ -38,13 +38,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @RequiresApi(Build.VERSION_CODES.P)
@@ -116,14 +115,14 @@ fun LoginContent(
                 tint = MaterialTheme.colorScheme.primary
             )
 
-            Text("Iniciar Sesión", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(stringResource(R.string.login), fontSize = 22.sp, fontWeight = FontWeight.Bold)
 
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
                 value = email,
                 onValueChange = onValueChangeE,
-                label = { Text("Correo electrónico") },
+                label = { Text(stringResource(R.string.email)) },
                 leadingIcon = {
                     Icon(Icons.Default.Email, contentDescription = "Email Icon")
                 },
@@ -135,7 +134,7 @@ fun LoginContent(
             OutlinedTextField(
                 value = password,
                 onValueChange = onValueChangeP,
-                label = { Text("Contraseña") },
+                label = { Text(stringResource(R.string.password)) },
                 leadingIcon = {
                     Icon(Icons.Default.Lock, contentDescription = "Password Icon")
                 },
@@ -157,13 +156,13 @@ fun LoginContent(
                     .height(50.dp),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text("Iniciar Sesión", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.login), fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Row {
-                Text("¿No tienes cuenta?", fontSize = 14.sp)
+                Text(stringResource(R.string.no_account), fontSize = 14.sp)
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     "Regístrate",

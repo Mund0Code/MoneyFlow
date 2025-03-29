@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import com.mundocode.moneyflow.database.Transaccion
-import com.mundocode.moneyflow.database.TransaccionDao
+import com.mundocode.moneyflow.database.daos.TransaccionDao
+import com.mundocode.moneyflow.database.entity.Transaccion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

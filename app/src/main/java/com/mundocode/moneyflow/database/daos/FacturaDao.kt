@@ -1,6 +1,7 @@
-package com.mundocode.moneyflow.database
+package com.mundocode.moneyflow.database.daos
 
 import androidx.room.*
+import com.mundocode.moneyflow.database.entity.Factura
 import kotlinx.coroutines.flow.Flow
 
 @Dao

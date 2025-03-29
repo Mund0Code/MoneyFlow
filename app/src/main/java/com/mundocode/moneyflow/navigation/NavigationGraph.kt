@@ -21,7 +21,10 @@ import com.mundocode.moneyflow.ui.screens.proyectos.ProyectosScreen
 import com.mundocode.moneyflow.ui.screens.settings.SettingsScreen
 
 @Composable
-fun NavigationGraph(navController: NavHostController, themeViewModel: ThemeViewModel) {
+fun NavigationGraph(
+    navController: NavHostController,
+    themeViewModel: ThemeViewModel
+) {
     NavHost(navController, startDestination = "login") {
         composable("login") { LoginScreen(navController = navController) }
         composable("register") { RegisterScreen(navController = navController) }
@@ -36,7 +39,10 @@ fun NavigationGraph(navController: NavHostController, themeViewModel: ThemeViewM
             DetalleFacturaScreen(navController = navController, facturaId = facturaId)
         }
         composable("crear_factura") { CrearFacturaScreen(navController = navController) }
-        composable("settings") { SettingsScreen(themeViewModel, navController = navController) }
+        composable("settings") { SettingsScreen(
+            themeViewModel,
+            navController = navController
+        ) }
         composable("scanfacturascreen") { ScanFacturaScreen(navController = navController) }
         composable("transacciones") { ListaTransaccionesScreen(navController = navController) }
         composable("agregar_transaccion") { AgregarTransaccionScreen(navController = navController) }

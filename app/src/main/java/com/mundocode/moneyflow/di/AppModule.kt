@@ -6,11 +6,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mundocode.moneyflow.core.SettingsDataStore
 import com.mundocode.moneyflow.database.AppDatabase
-import com.mundocode.moneyflow.database.ClienteDao
-import com.mundocode.moneyflow.database.EventoDao
-import com.mundocode.moneyflow.database.FacturaDao
-import com.mundocode.moneyflow.database.ProyectoDao
-import com.mundocode.moneyflow.database.TransaccionDao
+import com.mundocode.moneyflow.database.daos.ClienteDao
+import com.mundocode.moneyflow.database.daos.EventoDao
+import com.mundocode.moneyflow.database.daos.FacturaDao
+import com.mundocode.moneyflow.database.daos.ProyectoDao
+import com.mundocode.moneyflow.database.daos.TransaccionDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

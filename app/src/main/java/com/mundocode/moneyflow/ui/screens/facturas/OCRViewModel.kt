@@ -1,21 +1,17 @@
 package com.mundocode.moneyflow.ui.screens.facturas
 
-import android.app.Application
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import com.mundocode.moneyflow.database.AppDatabase
-import com.mundocode.moneyflow.database.Transaccion
-import com.mundocode.moneyflow.database.TransaccionDao
+import com.mundocode.moneyflow.database.daos.TransaccionDao
+import com.mundocode.moneyflow.database.entity.Transaccion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
