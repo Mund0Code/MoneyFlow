@@ -1,9 +1,12 @@
 package com.mundocode.moneyflow.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import com.mundocode.moneyflow.ThemeViewModel
+import com.mundocode.moneyflow.ui.screens.SplashScreen
 import com.mundocode.moneyflow.ui.screens.auth.LoginScreen
 import com.mundocode.moneyflow.ui.screens.auth.RegisterScreen
 import com.mundocode.moneyflow.ui.screens.calendario.CalendarScreen
@@ -20,12 +23,14 @@ import com.mundocode.moneyflow.ui.screens.home.HomeScreen
 import com.mundocode.moneyflow.ui.screens.proyectos.ProyectosScreen
 import com.mundocode.moneyflow.ui.screens.settings.SettingsScreen
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
     themeViewModel: ThemeViewModel
 ) {
-    NavHost(navController, startDestination = "login") {
+    NavHost(navController, startDestination = "splash") {
+        composable("splash") { SplashScreen(navController = navController) }
         composable("login") { LoginScreen(navController = navController) }
         composable("register") { RegisterScreen(navController = navController) }
         composable("home") { HomeScreen(navController = navController) }
