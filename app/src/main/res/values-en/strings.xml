@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MoneyFlow</string>
+    <string name="language">English</string>
+    <string name="actualLanguaje">Current Language</string>
     <string name="home">Home</string>
     <string name="clients">Customers</string>
     <string name="calendar">Calendar</string>

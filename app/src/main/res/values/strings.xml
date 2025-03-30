@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MoneyFlow</string>
+    <string name="language">Español</string>
+    <string name="actualLanguaje">Idioma Actual</string>
     <string name="home">Inicio</string>
     <string name="clients">Clientes</string>
     <string name="calendar">Calendario</string>
@@ -17,4 +19,5 @@
     <string name="register">Regístrate</string>
 
     <!--Register-->
+
 </resources>
