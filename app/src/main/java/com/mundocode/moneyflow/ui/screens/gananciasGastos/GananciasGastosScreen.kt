@@ -49,6 +49,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -61,6 +62,7 @@ import com.itextpdf.layout.Document
 import com.itextpdf.layout.element.Cell
 import com.itextpdf.layout.element.Paragraph
 import com.itextpdf.layout.element.Table
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.database.entity.Transaccion
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
@@ -258,7 +260,8 @@ fun AddTransactionDialog(showDialog: Boolean, onDismiss: () -> Unit, onConfirm: 
         Dialog(onDismissRequest = onDismiss) {
             Card(shape = RoundedCornerShape(12.dp), modifier = Modifier.padding(16.dp)) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    var tipo by remember { mutableStateOf("Ingreso") }
+                    val context = LocalContext.current
+                    var tipo by remember { mutableStateOf(context.getString(R.string.income)) }
                     var monto by remember { mutableStateOf("") }
                     var expanded by remember { mutableStateOf(false) }
                     var isLoading by remember { mutableStateOf(false) }
@@ -276,25 +279,25 @@ fun AddTransactionDialog(showDialog: Boolean, onDismiss: () -> Unit, onConfirm: 
                         }
                     }
 
-                    Text("Agregar Transacción", fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                    Text(stringResource(R.string.add_transaction), fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
 
                     Box(modifier = Modifier.fillMaxWidth()) {
                         Column {
                             OutlinedTextField(
                                 value = tipo,
                                 onValueChange = {},
-                                label = { Text("Tipo") },
+                                label = { Text(stringResource(R.string.type)) },
                                 readOnly = true,
                                 modifier = Modifier.fillMaxWidth().clickable { expanded = true }
                             )
                             AnimatedVisibility(visible = expanded, enter = fadeIn(), exit = fadeOut()) {
                                 DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                                    DropdownMenuItem(text = { Text("Ingreso") }, onClick = {
-                                        tipo = "Ingreso"
+                                    DropdownMenuItem(text = { Text(stringResource(R.string.income)) }, onClick = {
+                                        tipo = context.getString(R.string.income)
                                         expanded = false
                                     })
-                                    DropdownMenuItem(text = { Text("Gasto") }, onClick = {
-                                        tipo = "Gasto"
+                                    DropdownMenuItem(text = { Text(stringResource(R.string.expense)) }, onClick = {
+                                        tipo = context.getString(R.string.expense)
                                         expanded = false
                                     })
                                 }
@@ -308,10 +311,10 @@ fun AddTransactionDialog(showDialog: Boolean, onDismiss: () -> Unit, onConfirm: 
                                 monto = it
                                 errorMessage = ""
                             } else {
-                                errorMessage = "Ingrese un monto válido"
+                                errorMessage = context.getString(R.string.valid_mount)
                             }
                         },
-                        label = { Text("Monto") },
+                        label = { Text(stringResource(R.string.amount)) },
                         keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                         modifier = Modifier.fillMaxWidth(),
                         isError = errorMessage.isNotEmpty()
@@ -323,14 +326,14 @@ fun AddTransactionDialog(showDialog: Boolean, onDismiss: () -> Unit, onConfirm: 
                         modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Button(onClick = onDismiss) { Text("Cancelar") }
+                        Button(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
                         Button(
                             onClick = {
                                 if (monto.isNotEmpty() && monto.toDoubleOrNull() != null) {
                                     isLoading = true
                                     triggerSave = true
                                 } else {
-                                    errorMessage = "Ingrese un monto válido"
+                                    errorMessage = context.getString( R.string.valid_mount)
                                 }
                             },
                             enabled = monto.isNotEmpty() && monto.toDoubleOrNull() != null
@@ -339,7 +342,7 @@ fun AddTransactionDialog(showDialog: Boolean, onDismiss: () -> Unit, onConfirm: 
                                 CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp))
                             }
                             if (!isLoading) {
-                                Text("Guardar")
+                                Text(stringResource(id = R.string.save))
                             }
                         }
                     }

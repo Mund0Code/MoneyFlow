@@ -17,7 +17,84 @@
     <string name="password">Password</string>
     <string name="no_account">Haben Sie kein Konto?</string>
     <string name="register">Register</string>
+    <string name="error_login_user">Fehler bei der Anmeldung</string>
 
     <!--Register-->
+    <string name="register_title">Konto erstellen</string>
+    <string name="password_confirm">Passwort bestätigen</string>
+    <string name="register_button">Registrieren</string>
+    <string name="cuenta">Haben Sie bereits ein Konto?</string>
+    <string name="error_register_user">Fehler bei der Benutzerregistrierung</string>
+    <string name="passwords_do_not_match">Passwörter stimmen nicht überein</string>
+
+    <!--Calendar-->
+    <string name="job">Arbeit</string>
+    <string name="personal">Persönlich</string>
+    <string name="meet">Besprechung</string>
+    <string name="other">Andere</string>
+    <string name="calendar_title">Veranstaltungskalender</string>
+    <string name="event">Veranstaltung</string>
+    <string name="date">Datum</string>
+    <string name="save">Speichern</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="event_title">Titel der Veranstaltung</string>
+    <string name="date_selected">Ausgewähltes Datum</string>
+
+    <!--Clients-->
+    <string name="customer_management">Kundenmanagement</string>
+    <string name="customer_search">Kunden-Suche</string>
+    <string name="name">Name</string>
+    <string name="phone">Handy</string>
+    <string name="full_name">Vollständiger Name</string>
+
+    <!--Invoice-->
+    <string name="new_invoice">Neue Rechnung</string>
+    <string name="create_nvoice">Rechnung erstellen</string>
+    <string name="client_name">Name des Kunden</string>
+    <string name="total_amount">Gesamtbetrag</string>
+    <string name="invoice_details">Details der Rechnung</string>
+    <string name="saved_invoice">Gespeicherte Rechnung</string>
+    <string name="save_invoice">Rechnung speichern</string>
+
+    <!--Invoice Details-->
+    <string name="invoice_detail">Details der Rechnung</string>
+    <string name="invoice_nr">Rechnung N</string>
+    <string name="client">Kunde</string>
+    <string name="total">Insgesamt</string>
+    <string name="products">Produkte</string>
+    <string name="send_email">Per E-Mail senden"></string>
+    <string name="download_pdf">PDF Herunterleaden"></string>
+
+    <!--Invoice List-->
+    <string name="recorded_invoices">Registrierte Rechnungen</string>
+    <string name="no_invoices">Es werden keine Rechnungen registriert.</string>
+    <string name="paid">Bezahlt</string>
+    <string name="pending">Anhängig</string>
+    <string name="canceled">Abgesagt</string>
+
+    <!--Invoice Scan-->
+    <string name="error_picture">Fehler bei der Aufnahme des Fotos</string>
+    <string name="permission_denied">Kameraerlaubnis verweigert</string>
+    <string name="scan_title">Rechnung scannen</string>
+    <string name="select_invoice">Eine Rechnung auswählen oder erfassen</string>
+    <string name="take_photo">Foto aufnehmen</string>
+    <string name="data_extracted">Extrahierte Daten</string>
+    <string name="save_expense">Ausgaben sparen</string>
+
+    <!--Add Transaction-->
+    <string name="income">Einkommen</string>
+    <string name="add_transaction">Transaktion hinzufügen</string>
+    <string name="add_new_transaction">Neue Transaktion hinzufügen</string>
+    <string name="type">Typ</string>
+    <string name="expense">Aufwand</string>
+    <string name="valid_mount">Geben Sie einen gültigen Betrag ein</string>
+    <string name="amount">Betrag </string>
+    <string name="category">Kategorie</string>
+    <string name="save_transaction">Transaktion speichern</string>
+
+    <!--ATransaction Detail-->
+    <string name="transaction_detail">Details zur Transaktion</string>
+    <string name="delete_transaction">Transaktion löschen</string>
+    <string name="not_found">Transaktion nicht gefunden</string>
 
 </resources>

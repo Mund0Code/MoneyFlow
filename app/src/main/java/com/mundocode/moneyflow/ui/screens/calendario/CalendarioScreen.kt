@@ -28,10 +28,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.ThemeViewModel
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
@@ -48,11 +50,11 @@ fun CalendarScreen(
     var tituloEvento by remember { mutableStateOf("") }
     var mostrarDialogo by remember { mutableStateOf(false) }
     val isDarkMode by themeViewModel.isDarkMode.collectAsState()
-    val categorias = listOf("Trabajo", "Personal", "Reunión", "Otro")
+    val categorias = listOf(stringResource(id = R.string.job), stringResource(id = R.string.personal), stringResource(id = R.string.meet), stringResource(id = R.string.other))
     var selectedCategory by remember { mutableStateOf(categorias[0]) }
 
         Scaffold(
-            topBar = { CustomTopAppBar(navController, "Calendario de Eventos") },
+            topBar = { CustomTopAppBar(navController, stringResource(id = R.string.calendar_title)) },
             floatingActionButton = {
                 FloatingActionButton(onClick = { mostrarDialogo = true }) {
                     Icon(Icons.Default.Add, contentDescription = "Añadir Evento")
@@ -105,11 +107,11 @@ fun CalendarScreen(
                             val evento = eventos[evento]
                             Column(modifier = Modifier.padding(16.dp)) {
                                 Text(
-                                    text = "Evento: ${evento.titulo}",
+                                    text = "${stringResource(id = R.string.event)}: ${evento.titulo}",
                                     color = if (isDarkMode) Color.White else Color.Black
                                 )
                                 Text(
-                                    text = "Fecha: ${evento.fecha}",
+                                    text = "${stringResource(id = R.string.date)}: ${evento.fecha}",
                                     color = if (isDarkMode) Color.White else Color.Black
                                 )
                             }
@@ -134,12 +136,12 @@ fun CalendarScreen(
                             tituloEvento = ""
                         }
                     }) {
-                        Text("Guardar")
+                        Text(stringResource(id = R.string.save))
                     }
                 },
                 dismissButton = {
                     Button(onClick = { mostrarDialogo = false }) {
-                        Text("Cancelar")
+                        Text(stringResource(id = R.string.cancel))
                     }
                 },
                 text = {
@@ -147,8 +149,8 @@ fun CalendarScreen(
                         TextField(
                             value = tituloEvento,
                             onValueChange = { tituloEvento = it },
-                            label = { Text("Título del Evento") })
-                        Text("Fecha seleccionada: ${selectedDate.value}")
+                            label = { Text(stringResource(id = R.string.event_title)) })
+                        Text("${stringResource(id = R.string.date_selected)}: ${selectedDate.value}")
                     }
                 }
             )

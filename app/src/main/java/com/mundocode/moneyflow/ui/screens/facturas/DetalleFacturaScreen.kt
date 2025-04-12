@@ -24,12 +24,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 import java.text.NumberFormat
@@ -48,7 +50,7 @@ fun DetalleFacturaScreen(
     }
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Detalle de Factura") },
+        topBar = { CustomTopAppBar(navController, stringResource(id = R.string.invoice_details)) },
         bottomBar = { BottomNavigationBar(navController) },
     ) { paddingValues ->
         factura?.let { factura ->
@@ -59,14 +61,14 @@ fun DetalleFacturaScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Text("🧾 Factura N° ${factura.id}", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                Text("📅 Fecha: ${factura.fecha}", fontSize = 16.sp)
-                Text("👤 Cliente: ${factura.clienteNombre}", fontSize = 16.sp)
-                Text("💰 Total: ${NumberFormat.getCurrencyInstance().format(factura.montoTotal)}", fontSize = 16.sp)
+                Text("🧾 ${stringResource(id = R.string.invoice_nr)}° ${factura.id}", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                Text("📅 ${stringResource(id = R.string.date)}: ${factura.fecha}", fontSize = 16.sp)
+                Text("👤 ${stringResource(id = R.string.client)}: ${factura.clienteNombre}", fontSize = 16.sp)
+                Text("💰 ${stringResource(id = R.string.total)}: ${NumberFormat.getCurrencyInstance().format(factura.montoTotal)}", fontSize = 16.sp)
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text("📦 Productos:", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text("📦 ${stringResource(id = R.string.products)}:", fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 factura.detalles.forEach { producto -> // ✅ Cambiado de productos a detalles
                     Text("- $producto")
                 }
@@ -80,7 +82,7 @@ fun DetalleFacturaScreen(
                     ) {
                         Icon(Icons.Default.Email, contentDescription = "Enviar")
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Enviar por Email")
+                        Text(stringResource(id = R.string.send_email))
                     }
 
                     Button(
@@ -89,7 +91,7 @@ fun DetalleFacturaScreen(
                     ) {
                         Icon(Icons.Default.PictureAsPdf, contentDescription = "Descargar PDF")
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Descargar PDF")
+                        Text(stringResource(id = R.string.download_pdf))
                     }
                 }
             }

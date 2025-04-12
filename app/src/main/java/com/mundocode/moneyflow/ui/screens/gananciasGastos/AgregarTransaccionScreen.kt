@@ -29,6 +29,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -36,19 +38,21 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgregarTransaccionScreen(viewModel: TransaccionViewModel = hiltViewModel(), navController: NavHostController) {
-    var tipo by remember { mutableStateOf("Ingreso") }
+    val context = LocalContext.current
+    var tipo by remember { mutableStateOf(context.getString(R.string.income)) }
     var monto by remember { mutableStateOf("") }
     var categoria by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Agregar Transacción") },
+        topBar = { CustomTopAppBar(navController, stringResource(R.string.add_transaction)) },
         bottomBar = { BottomNavigationBar(navController) }
     ) { paddingValues ->
         Column(
@@ -59,7 +63,7 @@ fun AgregarTransaccionScreen(viewModel: TransaccionViewModel = hiltViewModel(), 
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("📌 Agregar Nueva Transacción", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            Text("📌 ${stringResource(R.string.add_new_transaction)}", fontWeight = FontWeight.Bold, fontSize = 20.sp)
 
             Box(
                 modifier = Modifier.fillMaxWidth()
@@ -69,17 +73,17 @@ fun AgregarTransaccionScreen(viewModel: TransaccionViewModel = hiltViewModel(), 
                     OutlinedTextField(
                         value = tipo,
                         onValueChange = {},
-                        label = { Text("Tipo") },
+                        label = { Text(stringResource(R.string.type)) },
                         readOnly = true,
                         modifier = Modifier.fillMaxWidth().clickable { expanded = true }
                     )
                     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                        DropdownMenuItem(text = { Text("Ingreso") }, onClick = {
-                            tipo = "Ingreso"
+                        DropdownMenuItem(text = { Text(stringResource(R.string.income)) }, onClick = {
+                            tipo = context.getString(R.string.income)
                             expanded = false
                         })
-                        DropdownMenuItem(text = { Text("Gasto") }, onClick = {
-                            tipo = "Gasto"
+                        DropdownMenuItem(text = { Text(stringResource(R.string.expense)) }, onClick = {
+                            tipo = context.getString(R.string.expense)
                             expanded = false
                         })
                     }
@@ -93,10 +97,10 @@ fun AgregarTransaccionScreen(viewModel: TransaccionViewModel = hiltViewModel(), 
                         monto = it
                         errorMessage = ""
                     } else {
-                        errorMessage = "Ingrese un monto válido"
+                        errorMessage = context.getString(R.string.valid_mount)
                     }
                 },
-                label = { Text("Monto") },
+                label = { Text(stringResource(R.string.amount)) },
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth(),
                 isError = errorMessage.isNotEmpty()
@@ -105,7 +109,7 @@ fun AgregarTransaccionScreen(viewModel: TransaccionViewModel = hiltViewModel(), 
             OutlinedTextField(
                 value = categoria,
                 onValueChange = { categoria = it },
-                label = { Text("Categoría") },
+                label = { Text(stringResource(R.string.category)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -121,14 +125,14 @@ fun AgregarTransaccionScreen(viewModel: TransaccionViewModel = hiltViewModel(), 
                         viewModel.agregarTransaccion(tipo, monto.toDouble(), categoria.trim())
                         navController.popBackStack()
                     } else {
-                        errorMessage = "Ingrese un monto válido"
+                        errorMessage = context.getString(R.string.valid_mount)
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Icon(Icons.Default.Save, contentDescription = "Guardar")
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Guardar Transacción")
+                Text(stringResource(R.string.save_transaction))
             }
         }
     }

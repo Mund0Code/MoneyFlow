@@ -24,13 +24,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 import java.util.UUID
 
@@ -44,7 +45,7 @@ fun CrearFacturaScreen(viewModel: FacturaViewModel = hiltViewModel(), navControl
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Nueva Factura") }
+        topBar = { CustomTopAppBar(navController, stringResource(id = R.string.new_invoice)) }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -53,19 +54,19 @@ fun CrearFacturaScreen(viewModel: FacturaViewModel = hiltViewModel(), navControl
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text("📝 Crear Factura", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+            Text("📝 ${stringResource(id = R.string.create_nvoice)}", fontWeight = FontWeight.Bold, fontSize = 20.sp)
 
             OutlinedTextField(
                 value = clienteNombre,
                 onValueChange = { clienteNombre = it },
-                label = { Text("Nombre del Cliente") },
+                label = { Text(stringResource(id = R.string.client_name)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
             OutlinedTextField(
                 value = montoTotal,
                 onValueChange = { montoTotal = it },
-                label = { Text("Monto Total") },
+                label = { Text(stringResource(id = R.string.total_amount)) },
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -73,7 +74,7 @@ fun CrearFacturaScreen(viewModel: FacturaViewModel = hiltViewModel(), navControl
             OutlinedTextField(
                 value = detalles,
                 onValueChange = { detalles = it },
-                label = { Text("Detalles de la Factura") },
+                label = { Text(stringResource(id = R.string.invoice_details)) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = false
             )
@@ -90,7 +91,7 @@ fun CrearFacturaScreen(viewModel: FacturaViewModel = hiltViewModel(), navControl
                         detalles = detalles.split("\n")
                     )
                     isSaving = false
-                    Toast.makeText(context, "Factura guardada", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.saved_invoice), Toast.LENGTH_SHORT).show()
                     navController.popBackStack()
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -99,7 +100,7 @@ fun CrearFacturaScreen(viewModel: FacturaViewModel = hiltViewModel(), navControl
                 if (isSaving) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                 } else {
-                    Text("Guardar Factura")
+                    Text(stringResource(id = R.string.save_invoice))
                 }
             }
         }

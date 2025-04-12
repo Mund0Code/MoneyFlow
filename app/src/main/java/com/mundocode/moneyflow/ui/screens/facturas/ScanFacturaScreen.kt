@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
@@ -28,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import androidx.navigation.NavHostController
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 import java.io.File
@@ -47,7 +49,7 @@ fun ScanFacturaScreen(viewModel: OCRViewModel = hiltViewModel(), navController: 
         if (success) {
             imageUri?.let { viewModel.procesarImagen(it, context) }
         } else {
-            Toast.makeText(context, "Error al tomar la foto", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.error_picture), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -60,12 +62,12 @@ fun ScanFacturaScreen(viewModel: OCRViewModel = hiltViewModel(), navController: 
             imageUri = uri
             takePictureLauncher.launch(uri)
         } else {
-            Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.permission_denied), Toast.LENGTH_LONG).show()
         }
     }
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Escanear Factura") },
+        topBar = { CustomTopAppBar(navController, stringResource(id = R.string.scan_title)) },
         bottomBar = { BottomNavigationBar(navController) }
     ) {
         Column(
@@ -75,7 +77,7 @@ fun ScanFacturaScreen(viewModel: OCRViewModel = hiltViewModel(), navController: 
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Selecciona o captura una factura", fontWeight = FontWeight.Bold)
+            Text(stringResource(id = R.string.select_invoice), fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(16.dp))
 
             imageUri?.let {
@@ -95,19 +97,19 @@ fun ScanFacturaScreen(viewModel: OCRViewModel = hiltViewModel(), navController: 
                 Button(onClick = { permissionLauncher.launch(Manifest.permission.CAMERA) }) {
                     Icon(Icons.Default.CameraAlt, contentDescription = "Capturar Imagen")
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Tomar Foto")
+                    Text(stringResource(id = R.string.take_photo))
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             facturaTexto?.let {
-                Text("📄 Datos extraídos:", fontWeight = FontWeight.Bold)
+                Text("📄 ${stringResource(id = R.string.data_extracted)}:", fontWeight = FontWeight.Bold)
                 Text(it, modifier = Modifier.padding(8.dp))
                 Button(onClick = { viewModel.guardarGasto(it, viewModel.productosEscaneados.value) }) {
                     Icon(Icons.Default.Save, contentDescription = "Guardar")
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Guardar Gasto")
+                    Text(stringResource(id = R.string.save_expense))
                 }
             }
         }

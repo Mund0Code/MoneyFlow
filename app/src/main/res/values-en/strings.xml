@@ -17,7 +17,84 @@
     <string name="password">Passwort</string>
     <string name="no_account">Don\'t have an account?</string>
     <string name="register">Register</string>
+    <string name="error_login_user">Error logging in user</string>
 
     <!--Register-->
+    <string name="register_title">Create an Account</string>
+    <string name="password_confirm">Confirm Password</string>
+    <string name="register_button">Register</string>
+    <string name="cuenta">Already have an account?</string>
+    <string name="error_register_user">Error registering user</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+
+    <!--Calendar-->
+    <string name="job">Work</string>
+    <string name="personal">Personal</string>
+    <string name="meet">Meeting</string>
+    <string name="other">Other</string>
+    <string name="calendar_title">Calendar of Events</string>
+    <string name="event">Event</string>
+    <string name="date">Date</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="event_title">Event Title</string>
+    <string name="date_selected">Date selected</string>
+
+    <!--Clients-->
+    <string name="customer_management">Customer Management</string>
+    <string name="customer_search">Customer Search</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="full_name">Full Name</string>
+
+    <!--Invoice-->
+    <string name="new_invoice">New Invoice</string>
+    <string name="create_nvoice">Create Invoice</string>
+    <string name="client_name">Client\'s Name</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="invoice_details">Invoice Details</string>
+    <string name="saved_invoice">Saved Invoice</string>
+    <string name="save_invoice">Save Invoice</string>
+
+    <!--Invoice Details-->
+    <string name="invoice_detail">Invoice Detail</string>
+    <string name="invoice_nr">Invoice N</string>
+    <string name="client">Client</string>
+    <string name="total">Total</string>
+    <string name="products">Products</string>
+    <string name="send_email">Send by Email"></string>
+    <string name="download_pdf">Download PDF"></string>
+
+    <!--Invoice List-->
+    <string name="recorded_invoices">Recorded Invoices</string>
+    <string name="no_invoices">There are no invoices registered.</string>
+    <string name="paid">Paid</string>
+    <string name="pending">Pending</string>
+    <string name="canceled">Canceled</string>
+
+    <!--Invoice Scan-->
+    <string name="error_picture">Error while taking the picture</string>
+    <string name="permission_denied">Camera permission denied</string>
+    <string name="scan_title">Scan Invoice</string>
+    <string name="select_invoice">Select or capture an invoice</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="data_extracted">Data extracted</string>
+    <string name="save_expense">Save Expense</string>
+
+    <!--Add Transaction-->
+    <string name="income">Income</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="add_new_transaction">Add New Transaction</string>
+    <string name="type">Type</string>
+    <string name="expense">Expense</string>
+    <string name="valid_mount">Enter a valid amount</string>
+    <string name="amount">Amount</string>
+    <string name="category">Category</string>
+    <string name="save_transaction">Save Transaction</string>
+
+    <!--ATransaction Detail-->
+    <string name="transaction_detail">Transaction Detail</string>
+    <string name="delete_transaction">Delete Transaction</string>
+    <string name="not_found">Transaction not found</string>
 
 </resources>

@@ -17,7 +17,85 @@
     <string name="password">Contraseña</string>
     <string name="no_account">¿No tienes cuenta?</string>
     <string name="register">Regístrate</string>
+    <string name="error_login_user">Error al iniciar sesión</string>
 
     <!--Register-->
+    <string name="register_title">Crear Cuenta</string>
+    <string name="password_confirm">Confirmar Contraseña</string>
+    <string name="register_button">Registrarse</string>
+    <string name="cuenta">¿Ya tienes una cuenta?</string>
+    <string name="error_register_user">Error al registrar usuario</string>
+    <string name="passwords_do_not_match">Las contraseñas no coinciden</string>
 
+    <!--Calendar-->
+    <string name="job">Trabajo</string>
+    <string name="personal">Personal</string>
+    <string name="meet">Reunión</string>
+    <string name="other">Otro</string>
+    <string name="calendar_title">Calendario de Eventos</string>
+    <string name="event">Evento</string>
+    <string name="date">Fecha</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="event_title">Título del Evento</string>
+    <string name="date_selected">Fecha seleccionada</string>
+
+    <!--Clients-->
+    <string name="customer_management">Gestión de Clientes</string>
+    <string name="customer_search">Buscar Cliente</string>
+    <string name="name">Nombre</string>
+    <string name="phone">Teléfono</string>
+    <string name="full_name">Nombre Completo</string>
+
+    <!--Invoice-->
+    <string name="new_invoice">Nueva Factura</string>
+    <string name="create_nvoice">Crear Factura</string>
+    <string name="client_name">Nombre del Cliente</string>
+    <string name="total_amount">Monto Total</string>
+    <string name="invoice_details">Detalles de la Factura</string>
+    <string name="saved_invoice">Factura guardada</string>
+    <string name="save_invoice">Guardar Factura</string>
+
+    <!--Invoice Details-->
+    <string name="invoice_detail">Detalle de Factura</string>
+    <string name="invoice_nr">Factura N</string>
+    <string name="client">Cliente</string>
+    <string name="total">Total</string>
+    <string name="products">Productos</string>
+    <string name="send_email">Enviar por Email"></string>
+    <string name="download_pdf">Descargar PDF"></string>
+
+    <!--Invoice List-->
+    <string name="recorded_invoices">Facturas Registradas</string>
+    <string name="no_invoices">No hay facturas registradas.</string>
+    <string name="paid">Pagado</string>
+    <string name="pending">Pendiente</string>
+    <string name="canceled">Cancelado</string>
+
+    <!--Invoice Scan-->
+    <string name="error_picture">Error al tomar la foto</string>
+    <string name="permission_denied">Permiso de cámara denegado</string>
+    <string name="scan_title">Escanear Factura</string>
+    <string name="select_invoice">Selecciona o captura una factura</string>
+    <string name="take_photo">Tomar Foto</string>
+    <string name="data_extracted">Datos extraídos</string>
+    <string name="save_expense">Guardar Gasto</string>
+
+    <!--Add Transaction-->
+    <string name="income">Ingreso</string>
+    <string name="add_transaction">Agregar Transacción</string>
+    <string name="add_new_transaction">Agregar Nueva Transacción</string>
+    <string name="type">Tipo</string>
+    <string name="expense">Gasto</string>
+    <string name="valid_mount">Ingrese un monto válido</string>
+    <string name="amount">Monto</string>
+    <string name="category">Categoria</string>
+    <string name="save_transaction">Guardar Transacción</string>
+
+    <!--Transaction Detail-->
+    <string name="transaction_detail">Detalle de Transacción</string>
+    <string name="delete_transaction">Eliminar Transacción</string>
+    <string name="not_found">Transacción no encontrada</string>
+
+    <string name=""></string>
 </resources>

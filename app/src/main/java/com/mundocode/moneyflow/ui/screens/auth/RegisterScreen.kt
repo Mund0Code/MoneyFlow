@@ -34,6 +34,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -41,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.mundocode.moneyflow.R
 
 @Composable
 fun RegisterScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavController) {
@@ -48,6 +51,7 @@ fun RegisterScreen(viewModel: AuthViewModel = hiltViewModel(), navController: Na
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
+    val context = LocalContext.current
 
     Scaffold { paddingValues ->
         Box(
@@ -64,11 +68,11 @@ fun RegisterScreen(viewModel: AuthViewModel = hiltViewModel(), navController: Na
                             if (success) {
                                 navController.navigate("home")
                             } else {
-                                error = "Error al registrar usuario"
+                                error = context.getString(R.string.error_register_user)
                             }
                         }
                     } else {
-                        error = "Las contraseñas no coinciden"
+                        error = context.getString(R.string.passwords_do_not_match)
                     }
                 },
                 email = email,
@@ -118,7 +122,7 @@ fun RegisterContent(
                 tint = MaterialTheme.colorScheme.primary
             )
 
-            Text("Crear Cuenta", fontSize = 22.sp, fontWeight = FontWeight.Bold)
+            Text(stringResource(id = R.string.register_title), fontSize = 22.sp, fontWeight = FontWeight.Bold)
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -126,7 +130,7 @@ fun RegisterContent(
             OutlinedTextField(
                 value = email,
                 onValueChange = onValueChangeEmail,
-                label = { Text("Correo electrónico") },
+                label = { Text(stringResource(id = R.string.email)) },
                 leadingIcon = {
                     Icon(Icons.Default.Email, contentDescription = "Email Icon")
                 },
@@ -139,7 +143,7 @@ fun RegisterContent(
             OutlinedTextField(
                 value = password,
                 onValueChange = onValueChangePassword,
-                label = { Text("Contraseña") },
+                label = { Text(stringResource(id = R.string.password)) },
                 leadingIcon = {
                     Icon(Icons.Default.Lock, contentDescription = "Password Icon")
                 },
@@ -153,7 +157,7 @@ fun RegisterContent(
             OutlinedTextField(
                 value = confirmPassword,
                 onValueChange = onValueChangeConfirmPassword,
-                label = { Text("Confirmar Contraseña") },
+                label = { Text(stringResource(id = R.string.password_confirm)) },
                 leadingIcon = {
                     Icon(Icons.Default.Lock, contentDescription = "Confirm Password Icon")
                 },
@@ -177,17 +181,17 @@ fun RegisterContent(
                     .height(50.dp),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text("Registrarse", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                Text(stringResource(id = R.string.register_button), fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             // Opción para ir a Login
             Row {
-                Text("¿Ya tienes una cuenta?", fontSize = 14.sp)
+                Text(stringResource(id = R.string.cuenta), fontSize = 14.sp)
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
-                    "Iniciar Sesión",
+                    stringResource(id = R.string.login),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,

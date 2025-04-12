@@ -41,6 +41,7 @@ import com.mundocode.moneyflow.database.entity.Transaccion
 import java.text.NumberFormat
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
+import timber.log.Timber
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +55,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), navController: NavHos
 
     val transaccionesFiltradas by viewModel.transaccionesFiltradas.collectAsState(initial = emptyList())
 
-    Log.d("HomeScreen", "transaccionesFiltradas: $transaccionesFiltradas")
+    Timber.tag("HomeScreen").d("transaccionesFiltradas: $transaccionesFiltradas")
 
     Scaffold(
         topBar = { CustomTopAppBar(navController, "Dashboard Financiero") },
@@ -72,7 +73,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), navController: NavHos
                 CardResumenFinanciero(totalIngresos, totalGastos, flujoDeCaja)
                 CardPrediccionFinanzas(prediccionIngresos, prediccionGastos)
                 FiltroPorCategoria { categoria ->
-                    Log.d("HomeScreen", "Filtrando por categoría: $categoria") // 🔍 Depuración
+                    Timber.tag("HomeScreen").d("Filtrando por categoría: $categoria") // 🔍 Depuración
                     viewModel.filtrarTransacciones(categoria)
                 }
 
@@ -100,8 +101,8 @@ fun CardResumenFinanciero(ingresos: Double, gastos: Double, flujoCaja: Double) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                ResumenItem("💰", "Ingresos", ingresos, Color(0xFF2E7D32))
-                ResumenItem("📉", "Gastos", gastos, Color(0xFF8B0000))
+                ResumenItem("💰", "Ingresos", ingresos, Color(0xFF00FF0D))
+                ResumenItem("📉", "Gastos", gastos, Color(0xFFFF0000))
                 ResumenItem("🔹", "Flujo de Caja", flujoCaja, Color(0xFF00BFFF))
             }
         }

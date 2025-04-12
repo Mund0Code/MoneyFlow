@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -53,6 +54,7 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavCo
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
+    val context = LocalContext.current
 
     Scaffold { paddingValues ->
         Box(
@@ -68,7 +70,7 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavCo
                         if (success) {
                             navController.navigate("home")
                         } else {
-                            error = "Error al iniciar sesión"
+                            error = context.getString(R.string.error_login_user)
                         }
                     }
                 },

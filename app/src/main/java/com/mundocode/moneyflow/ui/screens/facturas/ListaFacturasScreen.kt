@@ -30,11 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.database.entity.Factura
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
@@ -47,7 +49,7 @@ fun ListaFacturasScreen(viewModel: FacturaViewModel = hiltViewModel(), navContro
     val facturas by viewModel.facturas.collectAsState(initial = emptyList())
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Facturas") },
+        topBar = { CustomTopAppBar(navController, stringResource(R.string.invoices)) },
         bottomBar = { BottomNavigationBar(navController) },
         floatingActionButton = {
             FloatingActionButton(
@@ -66,14 +68,14 @@ fun ListaFacturasScreen(viewModel: FacturaViewModel = hiltViewModel(), navContro
                 .padding(16.dp)
         ) {
             Text(
-                text = "📜 Facturas Registradas",
+                text = "📜 ${stringResource(R.string.recorded_invoices)}",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
 
             if (facturas.isEmpty()) {
                 Text(
-                    text = "No hay facturas registradas.",
+                    text = stringResource(R.string.no_invoices),
                     modifier = Modifier.padding(16.dp),
                     color = Color.Gray
                 )
@@ -94,9 +96,9 @@ fun ListaFacturasScreen(viewModel: FacturaViewModel = hiltViewModel(), navContro
 @Composable
 fun FacturaCard(factura: Factura, navController: NavHostController) {
     val estadoColor = when (factura.estado) {
-        "Pagado" -> Color.Green
-        "Pendiente" -> Color(0xFFFFA500) // Naranja
-        "Cancelado" -> Color.Red
+        stringResource(R.string.paid) -> Color.Green
+        stringResource(R.string.pending) -> Color(0xFFFFA500) // Naranja
+        stringResource(R.string.canceled) -> Color.Red
         else -> Color.Gray
     }
 
@@ -116,10 +118,10 @@ fun FacturaCard(factura: Factura, navController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text("Cliente: ${factura.clienteNombre}", fontWeight = FontWeight.Bold)
-                Text("Fecha: ${factura.fecha}", fontSize = 14.sp, color = Color.Gray)
+                Text("${stringResource(R.string.client)}: ${factura.clienteNombre}", fontWeight = FontWeight.Bold)
+                Text("${stringResource(R.string.date)}: ${factura.fecha}", fontSize = 14.sp, color = Color.Gray)
                 Text(
-                    "Total: ${NumberFormat.getCurrencyInstance().format(factura.montoTotal)}",
+                    "${stringResource(R.string.total)}: ${NumberFormat.getCurrencyInstance().format(factura.montoTotal)}",
                     fontWeight = FontWeight.Bold
                 )
             }

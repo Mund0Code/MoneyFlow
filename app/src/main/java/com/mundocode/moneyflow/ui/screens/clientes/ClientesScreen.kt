@@ -28,12 +28,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 
@@ -48,7 +50,7 @@ fun ClientesScreen(viewModel: ClienteViewModel = hiltViewModel(), navController:
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Gestión de Clientes") },
+        topBar = { CustomTopAppBar(navController, stringResource(id = R.string.customer_management)) },
         floatingActionButton = {
             FloatingActionButton(onClick = { mostrarDialogo = true }) {
                 Icon(Icons.Default.Add, contentDescription = "Añadir Cliente")
@@ -60,7 +62,7 @@ fun ClientesScreen(viewModel: ClienteViewModel = hiltViewModel(), navController:
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Buscar Cliente") },
+                label = { Text(stringResource(id = R.string.customer_search)) },
                 modifier = Modifier.fillMaxWidth().padding(8.dp)
             )
             LazyColumn {
@@ -69,9 +71,9 @@ fun ClientesScreen(viewModel: ClienteViewModel = hiltViewModel(), navController:
                     Card(modifier = Modifier.padding(8.dp).fillMaxWidth()) {
                         val cliente = clientesFiltrados[cliente]
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Nombre: ${cliente.nombre}")
-                            Text("Teléfono: ${cliente.telefono}")
-                            Text("Correo: ${cliente.correo}")
+                            Text("${stringResource(id = R.string.name)}: ${cliente.nombre}")
+                            Text("${stringResource(id = R.string.phone)}: ${cliente.telefono}")
+                            Text("${stringResource(id = R.string.email)}: ${cliente.correo}")
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                                 IconButton(onClick = { viewModel.eliminarCliente(cliente) }) {
                                     Icon(Icons.Default.Delete, contentDescription = "Eliminar Cliente", tint = MaterialTheme.colorScheme.error)
@@ -97,19 +99,19 @@ fun ClientesScreen(viewModel: ClienteViewModel = hiltViewModel(), navController:
                         correo = ""
                     }
                 }) {
-                    Text("Guardar")
+                    Text(stringResource(id = R.string.save))
                 }
             },
             dismissButton = {
                 Button(onClick = { mostrarDialogo = false }) {
-                    Text("Cancelar")
+                    Text(stringResource(id = R.string.cancel))
                 }
             },
             text = {
                 Column {
-                    TextField(value = nombre, onValueChange = { nombre = it }, label = { Text("Nombre Completo") })
-                    TextField(value = telefono, onValueChange = { telefono = it }, label = { Text("Teléfono") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone))
-                    TextField(value = correo, onValueChange = { correo = it }, label = { Text("Correo Electrónico") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
+                    TextField(value = nombre, onValueChange = { nombre = it }, label = { Text(stringResource(id = R.string.full_name)) })
+                    TextField(value = telefono, onValueChange = { telefono = it }, label = { Text(stringResource(id = R.string.phone)) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone))
+                    TextField(value = correo, onValueChange = { correo = it }, label = { Text(stringResource(id = R.string.email)) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
                 }
             }
         )
