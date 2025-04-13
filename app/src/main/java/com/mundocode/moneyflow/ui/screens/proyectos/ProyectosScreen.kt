@@ -129,7 +129,7 @@ fun ProyectosScreen(viewModel: ProyectoViewModel = hiltViewModel(), navControlle
                             Text(estado)
                         }
                         DropdownMenu(expanded = isDropdownExpanded, onDismissRequest = { isDropdownExpanded = false }) {
-                            listOf(stringResource(R.string.in_progress), stringResource(R.string.completed), "En espera").forEach { estadoProyecto ->
+                            listOf(stringResource(R.string.in_progress), stringResource(R.string.completed), stringResource(R.string.standby)).forEach { estadoProyecto ->
                                 DropdownMenuItem(
                                     onClick = {
                                         estado = estadoProyecto
