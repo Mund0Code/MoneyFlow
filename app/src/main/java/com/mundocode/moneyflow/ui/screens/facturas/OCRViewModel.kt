@@ -2,7 +2,6 @@ package com.mundocode.moneyflow.ui.screens.facturas
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,21 +9,25 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.database.daos.TransaccionDao
 import com.mundocode.moneyflow.database.entity.Transaccion
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import javax.inject.Inject
 
 @HiltViewModel
 class OCRViewModel @Inject constructor(
-    private val transaccionDao: TransaccionDao
+    private val transaccionDao: TransaccionDao,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
@@ -47,7 +50,7 @@ class OCRViewModel @Inject constructor(
                 _facturaTexto.value = visionText.text
             }
             .addOnFailureListener { e ->
-                Log.e("OCRViewModel", "Error al reconocer texto", e)
+                Timber.tag("OCRViewModel").e(e, "Error al reconocer texto")
             }
     }
 
@@ -60,7 +63,7 @@ class OCRViewModel @Inject constructor(
                 _facturaTexto.value = visionText.text
             }
             .addOnFailureListener {
-                _facturaTexto.value = "Error al procesar la imagen"
+                _facturaTexto.value = context.getString(R.string.error_image)
             }
     }
 
@@ -77,7 +80,7 @@ class OCRViewModel @Inject constructor(
                 _productosEscaneados.value = productos
             }
             .addOnFailureListener { e ->
-                Log.e("OCRViewModel", "Error al escanear código de barras", e)
+                Timber.tag("OCRViewModel").e(e, "Error al escanear código de barras")
             }
     }
 
@@ -90,7 +93,7 @@ class OCRViewModel @Inject constructor(
 
         val transaccion = Transaccion(
             id = UUID.randomUUID().toString(),
-            tipo = "Gasto",
+            tipo = context.getString(R.string.expense),
             monto = montoEncontrado,
             fecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
         )

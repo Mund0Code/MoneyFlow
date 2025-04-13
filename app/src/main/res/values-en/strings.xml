@@ -138,4 +138,12 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="settings">Settings</string>
 
+    <!--VIEWMODELS-->
+    <string name="invoice_email">Please find enclosed the invoice corresponding to your purchase.</string>
+    <string name="send_invoice">Send invoice</string>
+    <string name="invoice_name">INVOICE</string>
+    <string name="quantity">Quantity</string>
+    <string name="thanks">Thank you for your purchase</string>
+    <string name="error_image">Error processing the image</string>
+
 </resources>

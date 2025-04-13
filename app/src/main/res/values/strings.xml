@@ -137,4 +137,13 @@
     <string name="close_session">Cerrar Sesión</string>
     <string name="dark_mode">Modo Oscuro</string>
     <string name="settings">Configuración</string>
+
+    <!--VIEWMODELS-->
+    <string name="invoice_email">Adjunto la factura correspondiente a su compra.</string>
+    <string name="send_invoice">Enviar factura</string>
+    <string name="invoice_name">FACTURA</string>
+    <string name="quantity">Cantidad</string>
+    <string name="thanks">Gracias por su compra</string>
+    <string name="error_image">Error al procesar la imagen</string>
+
 </resources>

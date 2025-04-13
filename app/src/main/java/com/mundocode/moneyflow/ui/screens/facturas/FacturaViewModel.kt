@@ -2,7 +2,6 @@ package com.mundocode.moneyflow.ui.screens.facturas
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Paint
@@ -10,7 +9,6 @@ import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Environment
-import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,20 +17,25 @@ import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.database.entity.Factura
 import com.mundocode.moneyflow.database.daos.FacturaDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.core.graphics.scale
+import androidx.core.net.toUri
 
 @HiltViewModel
 class FacturaViewModel @Inject constructor(
-    private val facturaDao: FacturaDao
+    private val facturaDao: FacturaDao,
+    @ApplicationContext private val context: Context,
 ) : ViewModel() {
 
     private val db = FirebaseFirestore.getInstance()
@@ -66,13 +69,13 @@ class FacturaViewModel @Inject constructor(
                         }
                     }
                     .addOnFailureListener {
-                        Log.e("FacturaViewModel", "Error al obtener facturas", it)
+                        Timber.tag("FacturaViewModel").e(it, "Error al obtener facturas")
                     }
                     .addOnCompleteListener {
                         _isLoading.value = false
                     }
             } catch (e: Exception) {
-                Log.e("FacturaViewModel", "Error cargando facturas", e)
+                Timber.tag("FacturaViewModel").e(e, "Error cargando facturas")
                 _isLoading.value = false
             }
         }
@@ -110,7 +113,7 @@ class FacturaViewModel @Inject constructor(
                     _facturaSeleccionada.value = factura
                 }
                 .addOnFailureListener {
-                    Log.e("FacturaViewModel", "Error al obtener factura", it)
+                    Timber.tag("FacturaViewModel").e(it, "Error al obtener factura")
                 }
                 .addOnCompleteListener {
                     _isLoading.value = false
@@ -122,15 +125,15 @@ class FacturaViewModel @Inject constructor(
         val emailIntent = Intent(Intent.ACTION_SEND).apply {
             type = "message/rfc822"
             putExtra(Intent.EXTRA_EMAIL, arrayOf("cliente@example.com"))
-            putExtra(Intent.EXTRA_SUBJECT, "Factura N° ${factura.id}")
-            putExtra(Intent.EXTRA_TEXT, "Adjunto la factura correspondiente a su compra.")
-            factura.pdfUrl?.let { putExtra(Intent.EXTRA_STREAM, Uri.parse(it)) }
+            putExtra(Intent.EXTRA_SUBJECT, "${context.getString(R.string.invoice_nr)}° ${factura.id}")
+            putExtra(Intent.EXTRA_TEXT, context.getString(R.string.invoice_email))
+            factura.pdfUrl?.let { putExtra(Intent.EXTRA_STREAM, it.toUri()) }
         }
 
         try {
-            context.startActivity(Intent.createChooser(emailIntent, "Enviar factura"))
+            context.startActivity(Intent.createChooser(emailIntent, context.getString(R.string.send_invoice)))
         } catch (e: Exception) {
-            Log.e("FacturaViewModel", "Error al enviar factura por correo", e)
+            Timber.tag("FacturaViewModel").e(e, "Error al enviar factura por correo")
         }
     }
 
@@ -147,13 +150,13 @@ class FacturaViewModel @Inject constructor(
             try {
                 context.startActivity(intent)
             } catch (e: Exception) {
-                Log.e("FacturaViewModel", "Error al abrir PDF", e)
+                Timber.tag("FacturaViewModel").e(e, "Error al abrir PDF")
             }
         }
     }
 
     private suspend fun generarFacturaPDF(factura: Factura, context: Context): File {
-        val file = File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "Factura_${factura.id}.pdf")
+        val file = File(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "Invoice_${factura.id}.pdf")
 
         withContext(Dispatchers.IO) {
             try {
@@ -180,30 +183,30 @@ class FacturaViewModel @Inject constructor(
                 val logoBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.ic_launcher)
                 val logoX = 20f
                 val logoY = yPos
-                canvas.drawBitmap(Bitmap.createScaledBitmap(logoBitmap, 100, 100, false), logoX, logoY, paint)
-                canvas.drawText("FACTURA", 250f, logoY + 40, titlePaint)
+                canvas.drawBitmap(logoBitmap.scale(100, 100, false), logoX, logoY, paint)
+                canvas.drawText(context.getString(R.string.invoice_name), 250f, logoY + 40, titlePaint)
 
                 yPos += 120f
                 canvas.drawLine(20f, yPos, 580f, yPos, linePaint)
 
                 yPos += 30f
-                canvas.drawText("Factura N°: ${factura.id}", 20f, yPos, boldPaint)
+                canvas.drawText("${context.getString(R.string.invoice_nr)}°: ${factura.id}", 20f, yPos, boldPaint)
                 yPos += 30f
-                canvas.drawText("Cliente: ${factura.clienteNombre}", 20f, yPos, paint)
+                canvas.drawText("${context.getString(R.string.client)}: ${factura.clienteNombre}", 20f, yPos, paint)
                 yPos += 30f
-                canvas.drawText("Fecha: ${factura.fecha}", 20f, yPos, paint)
+                canvas.drawText("${context.getString(R.string.date)}: ${factura.fecha}", 20f, yPos, paint)
                 yPos += 30f
-                canvas.drawText("Total: ${NumberFormat.getCurrencyInstance().format(factura.montoTotal)}", 20f, yPos, paint)
+                canvas.drawText("${context.getString(R.string.total)}: ${NumberFormat.getCurrencyInstance().format(factura.montoTotal)}", 20f, yPos, paint)
 
                 yPos += 50f
                 canvas.drawLine(20f, yPos, 580f, yPos, linePaint)
 
                 yPos += 30f
-                canvas.drawText("📦 Productos:", 20f, yPos, boldPaint)
+                canvas.drawText("📦 ${context.getString(R.string.products)}:", 20f, yPos, boldPaint)
 
                 yPos += 30f
-                canvas.drawText("Cantidad", 30f, yPos, boldPaint)
-                canvas.drawText("Descripción", 250f, yPos, boldPaint)
+                canvas.drawText(context.getString(R.string.quantity), 30f, yPos, boldPaint)
+                canvas.drawText(context.getString(R.string.description), 250f, yPos, boldPaint)
                 yPos += 20f
                 canvas.drawLine(20f, yPos, 580f, yPos, linePaint)
 
@@ -216,13 +219,13 @@ class FacturaViewModel @Inject constructor(
                 yPos += 50f
                 canvas.drawLine(20f, yPos, 580f, yPos, linePaint)
                 yPos += 30f
-                canvas.drawText("Gracias por su compra", 250f, yPos, boldPaint)
+                canvas.drawText(context.getString(R.string.thanks), 250f, yPos, boldPaint)
 
                 pdfDocument.finishPage(page)
                 pdfDocument.writeTo(FileOutputStream(file))
                 pdfDocument.close()
             } catch (e: Exception) {
-                Log.e("FacturaViewModel", "Error al generar PDF", e)
+                Timber.tag("FacturaViewModel").e(e, "Error al generar PDF")
             }
         }
 
