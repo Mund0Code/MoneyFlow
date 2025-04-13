@@ -31,6 +31,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.mundocode.moneyflow.R
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -43,18 +46,19 @@ import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProyectosScreen(viewModel: ProyectoViewModel = hiltViewModel(), navController: NavHostController) {
+    val context = LocalContext.current
     val proyectos by viewModel.proyectos.collectAsState(initial = emptyList())
     var nombre by remember { mutableStateOf("") }
     var descripcion by remember { mutableStateOf("") }
     var fechaInicio by remember { mutableStateOf("") }
     var fechaFin by remember { mutableStateOf("") }
-    var estado by remember { mutableStateOf("En progreso") }
+    var estado by remember { mutableStateOf(context.getString(R.string.in_progress)) }
     var mostrarDialogo by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
     var isDropdownExpanded by remember { mutableStateOf(false) }
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Gestión de Proyectos") },
+        topBar = { CustomTopAppBar(navController, context.getString(R.string.project_management)) },
         floatingActionButton = {
             FloatingActionButton(onClick = { mostrarDialogo = true }) {
                 Icon(Icons.Default.Add, contentDescription = "Añadir Proyecto")
@@ -66,7 +70,7 @@ fun ProyectosScreen(viewModel: ProyectoViewModel = hiltViewModel(), navControlle
             TextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                label = { Text("Buscar Proyecto") },
+                label = { Text(stringResource(R.string.search_project)) },
                 modifier = Modifier.fillMaxWidth().padding(8.dp)
             )
             LazyColumn {
@@ -75,11 +79,11 @@ fun ProyectosScreen(viewModel: ProyectoViewModel = hiltViewModel(), navControlle
                     Card(modifier = Modifier.padding(8.dp).fillMaxWidth()) {
                         val proyecto = proyectos[proyecto]
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Nombre: ${proyecto.nombre}")
-                            Text("Descripción: ${proyecto.descripcion}")
-                            Text("Fecha Inicio: ${proyecto.fechaInicio}")
-                            Text("Fecha Fin: ${proyecto.fechaFin}")
-                            Text("Estado: ${proyecto.estado}")
+                            Text("${stringResource(R.string.name)}: ${proyecto.nombre}")
+                            Text("${stringResource(R.string.description)}: ${proyecto.descripcion}")
+                            Text("${stringResource(R.string.start_date)}: ${proyecto.fechaInicio}")
+                            Text("${stringResource(R.string.date_end)}: ${proyecto.fechaFin}")
+                            Text("${stringResource(R.string.state)}: ${proyecto.estado}")
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                                 IconButton(onClick = { viewModel.eliminarProyecto(proyecto) }) {
                                     Icon(Icons.Default.Delete, contentDescription = "Eliminar Proyecto", tint = MaterialTheme.colorScheme.error)
@@ -106,26 +110,26 @@ fun ProyectosScreen(viewModel: ProyectoViewModel = hiltViewModel(), navControlle
                         fechaFin = ""
                     }
                 }) {
-                    Text("Guardar")
+                    Text(stringResource(R.string.save))
                 }
             },
             dismissButton = {
                 Button(onClick = { mostrarDialogo = false }) {
-                    Text("Cancelar")
+                    Text(stringResource(R.string.cancel))
                 }
             },
             text = {
                 Column {
-                    TextField(value = nombre, onValueChange = { nombre = it }, label = { Text("Nombre del Proyecto") })
-                    TextField(value = descripcion, onValueChange = { descripcion = it }, label = { Text("Descripción") })
-                    TextField(value = fechaInicio, onValueChange = { fechaInicio = it }, label = { Text("Fecha de Inicio") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
-                    TextField(value = fechaFin, onValueChange = { fechaFin = it }, label = { Text("Fecha de Fin") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
+                    TextField(value = nombre, onValueChange = { nombre = it }, label = { Text(stringResource(R.string.project_name)) })
+                    TextField(value = descripcion, onValueChange = { descripcion = it }, label = { Text(stringResource(R.string.description)) })
+                    TextField(value = fechaInicio, onValueChange = { fechaInicio = it }, label = { Text(stringResource(R.string.start_date)) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
+                    TextField(value = fechaFin, onValueChange = { fechaFin = it }, label = { Text(stringResource(R.string.date_end)) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
                     Box {
                         Button(onClick = { isDropdownExpanded = true }) {
                             Text(estado)
                         }
                         DropdownMenu(expanded = isDropdownExpanded, onDismissRequest = { isDropdownExpanded = false }) {
-                            listOf("En progreso", "Completado", "En espera").forEach { estadoProyecto ->
+                            listOf(stringResource(R.string.in_progress), stringResource(R.string.completed), "En espera").forEach { estadoProyecto ->
                                 DropdownMenuItem(
                                     onClick = {
                                         estado = estadoProyecto

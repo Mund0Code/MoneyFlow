@@ -32,11 +32,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.database.entity.Transaccion
 import java.text.NumberFormat
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
@@ -52,13 +55,14 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), navController: NavHos
     val flujoDeCaja by viewModel.flujoDeCaja.collectAsState(initial = 0.0)
     val prediccionIngresos by viewModel.prediccionIngresos.collectAsState(initial = 0.0)
     val prediccionGastos by viewModel.prediccionGastos.collectAsState(initial = 0.0)
+    val context = LocalContext.current
 
     val transaccionesFiltradas by viewModel.transaccionesFiltradas.collectAsState(initial = emptyList())
 
     Timber.tag("HomeScreen").d("transaccionesFiltradas: $transaccionesFiltradas")
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Dashboard Financiero") },
+        topBar = { CustomTopAppBar(navController, context.getString(R.string.financial_dashboard)) },
         bottomBar = { BottomNavigationBar(navController) }
     ) { paddingValues ->
         Box(
@@ -95,15 +99,15 @@ fun CardResumenFinanciero(ingresos: Double, gastos: Double, flujoCaja: Double) {
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("📊 Resumen Financiero", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Text("📊 ${stringResource(R.string.financial_summary)}", fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Spacer(modifier = Modifier.height(8.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                ResumenItem("💰", "Ingresos", ingresos, Color(0xFF00FF0D))
-                ResumenItem("📉", "Gastos", gastos, Color(0xFFFF0000))
-                ResumenItem("🔹", "Flujo de Caja", flujoCaja, Color(0xFF00BFFF))
+                ResumenItem("💰", stringResource(R.string.incomes), ingresos, Color(0xFF00FF0D))
+                ResumenItem("📉", stringResource(R.string.expenses), gastos, Color(0xFFFF0000))
+                ResumenItem("🔹", stringResource(R.string.cash_flow), flujoCaja, Color(0xFF00BFFF))
             }
         }
     }
@@ -130,9 +134,9 @@ fun CardPrediccionFinanzas(predIngresos: Double, predGastos: Double) {
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text("📈 Predicciones Financieras", fontWeight = FontWeight.Bold, fontSize = 18.sp)
-            Text("🔹 Ingresos Estimados: ${NumberFormat.getCurrencyInstance().format(predIngresos)}")
-            Text("🔻 Gastos Estimados: ${NumberFormat.getCurrencyInstance().format(predGastos)}")
+            Text("📈 ${stringResource(R.string.financial_forecasts)}", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+            Text("🔹 ${stringResource(R.string.estimated_revenues)}: ${NumberFormat.getCurrencyInstance().format(predIngresos)}")
+            Text("🔻 ${stringResource(R.string.estimed_expenses)}: ${NumberFormat.getCurrencyInstance().format(predGastos)}")
         }
     }
 }
@@ -142,8 +146,9 @@ fun FiltroPorCategoria(
     viewModel: HomeViewModel = hiltViewModel(),
     onCategoriaSeleccionada: (String) -> Unit,
 ) {
-    val categorias by viewModel.categoriasDisponibles.collectAsState(initial = listOf("Todas"))
-    var categoriaSeleccionada by remember { mutableStateOf("Todas") }
+    val context = LocalContext.current
+    val categorias by viewModel.categoriasDisponibles.collectAsState(initial = listOf(context.getString(R.string.all)))
+    var categoriaSeleccionada by remember { mutableStateOf(context.getString(R.string.all)) }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -169,10 +174,10 @@ fun FiltroPorCategoria(
 @Composable
 fun ListaTransacciones(transacciones: List<Transaccion>) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text("📋 Últimas Transacciones", fontWeight = FontWeight.Bold, fontSize = 18.sp)
+        Text("📋 ${stringResource(R.string.latest_transactions)}", fontWeight = FontWeight.Bold, fontSize = 18.sp)
 
         if (transacciones.isEmpty()) {
-            Text("No hay transacciones en esta categoría.", modifier = Modifier.padding(16.dp))
+            Text(stringResource(R.string.no_transactions), modifier = Modifier.padding(16.dp))
         } else {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2), // 🔹 Dos filas
@@ -190,9 +195,9 @@ fun ListaTransacciones(transacciones: List<Transaccion>) {
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                     ) {
                         Column(modifier = Modifier.padding(8.dp)) { // ✅ Column para organizar
-                            Text("Tipo: ${transaccion.tipo}", fontWeight = FontWeight.Bold)
-                            Text("Monto: ${NumberFormat.getCurrencyInstance().format(transaccion.monto)}")
-                            Text("Fecha: ${transaccion.fecha}")
+                            Text("${stringResource(R.string.type)}: ${transaccion.tipo}", fontWeight = FontWeight.Bold)
+                            Text("${stringResource(R.string.amount)}: ${NumberFormat.getCurrencyInstance().format(transaccion.monto)}")
+                            Text("${stringResource(R.string.date)}: ${transaccion.fecha}")
                         }
                     }
                 }

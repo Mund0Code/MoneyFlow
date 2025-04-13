@@ -97,4 +97,45 @@
     <string name="delete_transaction">Delete Transaction</string>
     <string name="not_found">Transaction not found</string>
 
+    <!--Profit/Expense-->
+    <string name="error_excel">Error when generating Excel</string>
+    <string name="excel_generated">Excel generated in</string>
+    <string name="error_pdf">Error generating PDF</string>
+    <string name="pdf_generated">PDF generated in</string>
+    <string name="financial_report">Financial Report</string>
+    <string name="excel_export">Export Excel</string>
+    <string name="pdf_export">Export PDF</string>
+    <string name="scan_invoice">Scan Invoice</string>
+    <string name="profit_expense">Profit/Expense</string>
+
+    <!--HOME-->
+    <string name="financial_dashboard">Financial Dashboard</string>
+    <string name="financial_summary">Financial Summary</string>
+    <string name="incomes">Income</string>
+    <string name="expenses">Expenses</string>
+    <string name="cash_flow">Cash Flow</string>
+    <string name="financial_forecasts">Financial Forecasts</string>
+    <string name="estimated_revenues">Estimated Revenues</string>
+    <string name="estimed_expenses">Estimated Expenses</string>
+    <string name="all">All</string>
+    <string name="no_transactions">There are no transactions in this category.</string>
+    <string name="latest_transactions">Latest Transactions</string>
+
+    <!--PROJECTS-->
+    <string name="in_progress">In progress</string>
+    <string name="project_management">Project Management</string>
+    <string name="search_project">Search Project</string>
+    <string name="description">Description</string>
+    <string name="start_date">Start Date</string>
+    <string name="date_end">Date End</string>
+    <string name="state">State</string>
+    <string name="project_name">Project Name</string>
+    <string name="completed">Completed</string>
+    <string name="standby">Standby</string>
+
+    <!--SETTINGS-->
+    <string name="close_session">Close Session</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="settings">Settings</string>
+
 </resources>

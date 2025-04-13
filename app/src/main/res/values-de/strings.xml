@@ -97,4 +97,45 @@
     <string name="delete_transaction">Transaktion löschen</string>
     <string name="not_found">Transaktion nicht gefunden</string>
 
+    <!--Profit/Expense-->
+    <string name="error_excel">Fehler beim Generieren von Excel</string>
+    <string name="excel_generated">Excel erzeugt in</string>
+    <string name="error_pdf">Fehler beim Erzeugen von PDF</string>
+    <string name="pdf_generated">PDF erzeugt in</string>
+    <string name="financial_report">Finanzielle Berichterstattung</string>
+    <string name="excel_export">Excel exportieren</string>
+    <string name="pdf_export">PDF exportieren</string>
+    <string name="scan_invoice">Rechnung scannen</string>
+    <string name="profit_expense">Gewinn/Aufwand</string>
+
+    <!--HOME-->
+    <string name="financial_dashboard">Finanzielles Dashboard</string>
+    <string name="financial_summary">Finanzielle Zusammenfassung</string>
+    <string name="incomes">Einkommen</string>
+    <string name="expenses">Ausgaben</string>
+    <string name="cash_flow">Cashflow</string>
+    <string name="financial_forecasts">Finanzielle Vorhersagen</string>
+    <string name="estimated_revenues">Geschätzte Einnahmen</string>
+    <string name="estimed_expenses">Geschätzte Ausgaben</string>
+    <string name="all">Alle</string>
+    <string name="no_transactions">In dieser Kategorie gibt es keine Transaktionen.</string>
+    <string name="latest_transactions">Letzte Transaktionen</string>
+
+    <!--PROJECTS-->
+    <string name="in_progress">In Arbeit</string>
+    <string name="project_management">Projektleitung</string>
+    <string name="search_project">Projekt suchen</string>
+    <string name="description">Beschreibung</string>
+    <string name="start_date">Datum des Beginns</string>
+    <string name="date_end">Datum Ende</string>
+    <string name="state">Staat</string>
+    <string name="project_name">Name des Projekts</string>
+    <string name="completed">Abgeschlossen</string>
+    <string name="standby">Bereitschaftsdienst</string>
+
+    <!--SETTINGS-->
+    <string name="close_session">Abmelden</string>
+    <string name="dark_mode">Dunkler Modus</string>
+    <string name="settings">Konfiguration</string>
+
 </resources>

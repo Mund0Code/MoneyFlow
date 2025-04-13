@@ -25,11 +25,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
 import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 import java.text.NumberFormat
@@ -41,9 +44,10 @@ fun ListaTransaccionesScreen(
     navController: NavHostController
 ) {
     val transacciones by viewModel.transacciones.collectAsState(initial = emptyList())
+    val context = LocalContext.current
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Transacciones") },
+        topBar = { CustomTopAppBar(navController, context.getString(R.string.transactions)) },
         floatingActionButton = {
             FloatingActionButton(onClick = { navController.navigate("agregar_transaccion") }) {
                 Icon(Icons.Default.Add, contentDescription = "Agregar Transacción")
@@ -75,9 +79,9 @@ fun ListaTransaccionesScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column {
-                                Text("Tipo: ${transaccion.tipo}", fontWeight = FontWeight.Bold)
-                                Text("Fecha: ${transaccion.fecha}")
-                                Text("Monto: ${NumberFormat.getCurrencyInstance().format(transaccion.monto)}")
+                                Text("${stringResource(R.string.type)}: ${transaccion.tipo}", fontWeight = FontWeight.Bold)
+                                Text("${stringResource(R.string.date)}: ${transaccion.fecha}")
+                                Text("${stringResource(R.string.amount)}: ${NumberFormat.getCurrencyInstance().format(transaccion.monto)}")
                             }
                             IconButton(onClick = { viewModel.eliminarTransaccion(transaccion) }) {
                                 Icon(Icons.Default.Delete, contentDescription = "Eliminar")

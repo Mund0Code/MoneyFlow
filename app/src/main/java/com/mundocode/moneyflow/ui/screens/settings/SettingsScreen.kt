@@ -48,7 +48,7 @@ fun SettingsScreen(
     val context = LocalContext.current
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Configuración") },
+        topBar = { CustomTopAppBar(navController, context.getString(R.string.settings)) },
         bottomBar = { BottomNavigationBar(navController) }
     ) {
         Column(modifier = Modifier.padding(it)) {
@@ -58,7 +58,7 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.padding(16.dp).fillMaxWidth()
             ) {
-                Text("Modo Oscuro", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.dark_mode), fontWeight = FontWeight.Bold)
                 Switch(
                     checked = isDarkMode,
                     onCheckedChange = { themeViewModel.toggleDarkMode(it) }
@@ -72,7 +72,7 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.padding(16.dp).fillMaxWidth()
             ) {
-                Text("Cerrar Sesión", fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.close_session), fontWeight = FontWeight.Bold)
                 Box {
                     Button(onClick = {
                         Firebase.auth.signOut()

@@ -85,7 +85,7 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
     val context = LocalContext.current // Obtener el contexto para mostrar Toast
 
     Scaffold(
-        topBar = { CustomTopAppBar(navController, "Ganancias/Gastos") },
+        topBar = { CustomTopAppBar(navController, context.getString(R.string.profit_expense)) },
         floatingActionButton = {
             FloatingActionButton(onClick = { mostrarDialogo = true }) {
                 Icon(Icons.Default.Add, contentDescription = "Agregar Transacción")
@@ -104,7 +104,7 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
                         navController.navigate("scanfacturascreen")
                     }
                 ) {
-                    Text("Escanear Factura")
+                    Text(stringResource(R.string.scan_invoice))
                 }
 
             LazyColumn(
@@ -126,8 +126,8 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column {
-                                Text("Tipo: ${transaccion.tipo}")
-                                Text("Monto: \$${transaccion.monto}")
+                                Text("${stringResource(R.string.type)}: ${transaccion.tipo}")
+                                Text("${stringResource(R.string.amount)}: \$${transaccion.monto}")
                             }
                             IconButton(
                                 onClick = { viewModel.eliminarTransaccion(transaccion) }
@@ -157,7 +157,7 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
                 }) {
                     Icon(Icons.Default.PictureAsPdf, contentDescription = "Exportar PDF")
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Exportar PDF")
+                    Text(stringResource(R.string.pdf_export))
                 }
 
                 Button(onClick = {
@@ -167,7 +167,7 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
                 }) {
                     Icon(Icons.Default.TableChart, contentDescription = "Exportar Excel")
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Exportar Excel")
+                    Text(stringResource(R.string.excel_export))
                 }
             }
 
@@ -187,19 +187,19 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
 
 
 fun exportarPDF(transacciones: List<Transaccion>, context: Context) {
-    val pdfFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Reporte_Financiero.pdf")
+    val pdfFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Financial-report.pdf")
 
     try {
         val writer = PdfWriter(pdfFile)
         val pdfDocument = PdfDocument(writer)
         val document = Document(pdfDocument)
 
-        document.add(Paragraph("Reporte Financiero").setBold().setFontSize(18f))
-        document.add(Paragraph("Fecha: ${SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())}"))
+        document.add(Paragraph(context.getString(R.string.financial_report)).setBold().setFontSize(18f))
+        document.add(Paragraph("${context.getString(R.string.date)}: ${SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())}"))
 
         val table = Table(floatArrayOf(1f, 2f)).useAllAvailableWidth()
-        table.addHeaderCell(Cell().add(Paragraph("Tipo")))
-        table.addHeaderCell(Cell().add(Paragraph("Monto")))
+        table.addHeaderCell(Cell().add(Paragraph(context.getString(R.string.type))))
+        table.addHeaderCell(Cell().add(Paragraph(context.getString(R.string.amount))))
 
         transacciones.forEach { transaccion ->
             table.addCell(Cell().add(Paragraph(transaccion.tipo)))
@@ -210,11 +210,11 @@ fun exportarPDF(transacciones: List<Transaccion>, context: Context) {
         document.close()
 
         CoroutineScope(Dispatchers.Main).launch {
-            Toast.makeText(context, "PDF generado en ${pdfFile.absolutePath}", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "${context.getString(R.string.pdf_generated)} ${pdfFile.absolutePath}", Toast.LENGTH_LONG).show()
         }
     } catch (e: Exception) {
         e.printStackTrace()
-        Toast.makeText(context, "Error al generar PDF", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.error_pdf), Toast.LENGTH_LONG).show()
     }
 }
 
@@ -223,12 +223,12 @@ fun exportarExcel(transacciones: List<Transaccion>, context: Context) {
 
     try {
         val workbook = XSSFWorkbook()
-        val sheet = workbook.createSheet("Transacciones")
+        val sheet = workbook.createSheet(context.getString(R.string.transactions))
 
         // Crear encabezados
         val headerRow = sheet.createRow(0)
-        headerRow.createCell(0).setCellValue("Tipo")
-        headerRow.createCell(1).setCellValue("Monto")
+        headerRow.createCell(0).setCellValue(context.getString(R.string.type))
+        headerRow.createCell(1).setCellValue(context.getString(R.string.amount))
 
         // Insertar datos
         transacciones.forEachIndexed { index, transaccion ->
@@ -244,11 +244,11 @@ fun exportarExcel(transacciones: List<Transaccion>, context: Context) {
 
         // Mostrar Toast en el hilo principal
         CoroutineScope(Dispatchers.Main).launch {
-            Toast.makeText(context, "Excel generado en ${excelFile.absolutePath}", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "${context.getString(R.string.excel_generated)} ${excelFile.absolutePath}", Toast.LENGTH_LONG).show()
         }
     } catch (e: Exception) {
         e.printStackTrace()
-        Toast.makeText(context, "Error al generar Excel", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.error_excel), Toast.LENGTH_LONG).show()
     }
 }
 

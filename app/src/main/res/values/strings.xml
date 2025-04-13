@@ -6,7 +6,7 @@
     <string name="clients">Clientes</string>
     <string name="calendar">Calendario</string>
     <string name="invoices">Facturas</string>
-    <string name="transactions">Transaciones</string>
+    <string name="transactions">Transacciones</string>
     <string name="finances">Finanzas</string>
     <string name="projects">Proyectos</string>
     <string name="more">Más</string>
@@ -97,5 +97,44 @@
     <string name="delete_transaction">Eliminar Transacción</string>
     <string name="not_found">Transacción no encontrada</string>
 
-    <string name=""></string>
+    <!--Profit/Expense-->
+    <string name="error_excel">Error al generar Excel</string>
+    <string name="excel_generated">Excel generado en</string>
+    <string name="error_pdf">Error al generar PDF</string>
+    <string name="pdf_generated">PDF generado en</string>
+    <string name="financial_report">Reporte Financiero</string>
+    <string name="excel_export">Exportar Excel</string>
+    <string name="pdf_export">Exportar PDF</string>
+    <string name="scan_invoice">Escanear Factura</string>
+    <string name="profit_expense">Ganancias/Gastos</string>
+
+    <!--HOME-->
+    <string name="financial_dashboard">Dashboard Financiero</string>
+    <string name="financial_summary">Resumen Financiero</string>
+    <string name="incomes">Ingresos</string>
+    <string name="expenses">Gastos</string>
+    <string name="cash_flow">Flujo de Caja</string>
+    <string name="financial_forecasts">Predicciones Financieras</string>
+    <string name="estimated_revenues">Ingresos Estimados</string>
+    <string name="estimed_expenses">Gastos Estimados</string>
+    <string name="all">Todas</string>
+    <string name="no_transactions">No hay transacciones en esta categoría.</string>
+    <string name="latest_transactions">Últimas Transacciones</string>
+
+    <!--PROJECTS-->
+    <string name="in_progress"></string>
+    <string name="project_management">Gestión de Proyectos</string>
+    <string name="search_project">Buscar Proyecto</string>
+    <string name="description">Descripción</string>
+    <string name="start_date">Fecha de Inicio</string>
+    <string name="date_end">Fecha de Fin</string>
+    <string name="state">Estado</string>
+    <string name="project_name">Nombre del Proyecto</string>
+    <string name="completed">Completado</string>
+    <string name="standby">En Espera</string>
+
+    <!--SETTINGS-->
+    <string name="close_session">Cerrar Sesión</string>
+    <string name="dark_mode">Modo Oscuro</string>
+    <string name="settings">Configuración</string>
 </resources>
