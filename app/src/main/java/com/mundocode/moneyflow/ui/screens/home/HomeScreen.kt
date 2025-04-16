@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.database.entity.Transaccion
@@ -50,10 +51,10 @@ import timber.log.Timber
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), navController: NavHostController) {
-    val totalIngresos by viewModel.totalIngresos.collectAsState(initial = 0.0)
-    val totalGastos by viewModel.totalGastos.collectAsState(initial = 0.0)
-    val flujoDeCaja by viewModel.flujoDeCaja.collectAsState(initial = 0.0)
-    val prediccionIngresos by viewModel.prediccionIngresos.collectAsState(initial = 0.0)
+    val totalIngresos by viewModel.totalIngresos.collectAsStateWithLifecycle()
+    val totalGastos by viewModel.totalGastos.collectAsStateWithLifecycle()
+    val flujoDeCaja by viewModel.flujoDeCaja.collectAsStateWithLifecycle()
+    val prediccionIngresos by viewModel.prediccionIngresos.collectAsStateWithLifecycle()
     val prediccionGastos by viewModel.prediccionGastos.collectAsState(initial = 0.0)
     val context = LocalContext.current
 

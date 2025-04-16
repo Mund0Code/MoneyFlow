@@ -27,14 +27,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    signingConfigs {
-        create("release") {
-            storeFile = file("D:/Proyectos/MoneyFlow2.jks") // Ruta del keystore
-            storePassword = "98092410"
-            keyAlias = "MoneyFlow2"
-            keyPassword = "98092410"
-        }
-    }
+//    signingConfigs {
+//        create("release") {
+//            storeFile = file("D:/Proyectos/MoneyFlow2.jks") // Ruta del keystore
+//            storePassword = "98092410"
+//            keyAlias = "MoneyFlow2"
+//            keyPassword = "98092410"
+//        }
+//    }
 
     buildTypes {
         release {
@@ -44,7 +44,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+//            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
