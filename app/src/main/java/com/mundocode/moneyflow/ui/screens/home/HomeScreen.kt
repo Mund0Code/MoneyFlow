@@ -1,6 +1,5 @@
 package com.mundocode.moneyflow.ui.screens.home
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -147,7 +146,7 @@ fun FiltroPorCategoria(
     onCategoriaSeleccionada: (String) -> Unit,
 ) {
     val context = LocalContext.current
-    val categorias by viewModel.categoriasDisponibles.collectAsState(initial = listOf(context.getString(R.string.all)))
+    val categorias by viewModel.categoriasDisponibles.collectAsState(initial = listOf(stringResource(R.string.all)))
     var categoriaSeleccionada by remember { mutableStateOf(context.getString(R.string.all)) }
 
     Row(

@@ -15,17 +15,20 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -85,7 +88,7 @@ fun ListaFacturasScreen(viewModel: FacturaViewModel = hiltViewModel(), navContro
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(facturas.size) { factura ->
-                        FacturaCard(facturas[factura], navController)
+                        FacturaCard(facturas[factura], navController, onDeleteClick = { viewModel.eliminarFactura(facturas[factura]) })
                     }
                 }
             }
@@ -94,7 +97,7 @@ fun ListaFacturasScreen(viewModel: FacturaViewModel = hiltViewModel(), navContro
 }
 
 @Composable
-fun FacturaCard(factura: Factura, navController: NavHostController) {
+fun FacturaCard(factura: Factura, navController: NavHostController, onDeleteClick: () -> Unit = {}) {
     val estadoColor = when (factura.estado) {
         stringResource(R.string.paid) -> Color.Green
         stringResource(R.string.pending) -> Color(0xFFFFA500) // Naranja
@@ -125,12 +128,26 @@ fun FacturaCard(factura: Factura, navController: NavHostController) {
                     fontWeight = FontWeight.Bold
                 )
             }
-            Box(
-                modifier = Modifier
-                    .size(24.dp)
-                    .clip(CircleShape)
-                    .background(estadoColor)
-            ) // 🔹 Indicador de estado
+            Column(
+                modifier = Modifier.padding(start = 16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clip(CircleShape)
+                        .background(estadoColor)
+                ) // 🔹 Indicador de estado
+
+                IconButton(onClick = { onDeleteClick() }) {
+                    Icon(
+                        Icons.Default.Delete,
+                        contentDescription = "Eliminar Factura",
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
         }
     }
 }

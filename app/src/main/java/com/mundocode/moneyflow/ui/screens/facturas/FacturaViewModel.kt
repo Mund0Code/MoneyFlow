@@ -100,6 +100,26 @@ class FacturaViewModel @Inject constructor(
         }
     }
 
+    fun eliminarFactura(factura: Factura) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                // Eliminar de Room
+                facturaDao.deleteFactura(factura)
+
+                // Eliminar de Firestore
+                db.collection("facturas").document(factura.id).delete()
+                    .addOnSuccessListener {
+                        Timber.tag("FacturaViewModel").d("Factura eliminada: ${factura.id}")
+                    }
+                    .addOnFailureListener {
+                        Timber.tag("FacturaViewModel").e(it, "Error al eliminar factura de Firestore")
+                    }
+            } catch (e: Exception) {
+                Timber.tag("FacturaViewModel").e(e, "Error al eliminar factura")
+            }
+        }
+    }
+
     fun cargarFacturaPorId(facturaId: String) {
         _isLoading.value = true
 
