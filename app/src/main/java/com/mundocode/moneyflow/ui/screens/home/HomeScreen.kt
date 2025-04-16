@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -85,7 +86,6 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(), navController: NavHos
         }
     }
 }
-
 
 @Composable
 fun CardResumenFinanciero(ingresos: Double, gastos: Double, flujoCaja: Double) {
@@ -169,7 +169,6 @@ fun FiltroPorCategoria(
     }
 }
 
-
 @Composable
 fun ListaTransacciones(transacciones: List<Transaccion>) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -204,3 +203,22 @@ fun ListaTransacciones(transacciones: List<Transaccion>) {
         }
     }
 }
+
+@Preview
+@Composable
+fun CardResumenFinancieroPreview() {
+    CardResumenFinanciero(
+        ingresos = 1000.0,
+        gastos = 500.0,
+        flujoCaja = 500.0
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ListaTransaccionesPreview() {
+    ListaTransacciones(
+        transacciones = listOf()
+    )
+}
+

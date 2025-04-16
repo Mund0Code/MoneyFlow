@@ -41,7 +41,7 @@ import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 fun SettingsScreen(
     themeViewModel: ThemeViewModel = hiltViewModel(),
     navController: NavHostController,
-    viewModel: LanguageViewModel = hiltViewModel()
+    viewModel: LanguageViewModel = hiltViewModel(),
 ) {
     val isDarkMode by themeViewModel.isDarkMode.collectAsState()
 
@@ -56,7 +56,9 @@ fun SettingsScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(16.dp).fillMaxWidth()
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
             ) {
                 Text(stringResource(R.string.dark_mode), fontWeight = FontWeight.Bold)
                 Switch(
@@ -70,7 +72,9 @@ fun SettingsScreen(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(16.dp).fillMaxWidth()
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
             ) {
                 Text(stringResource(R.string.close_session), fontWeight = FontWeight.Bold)
                 Box {
@@ -80,7 +84,10 @@ fun SettingsScreen(
                             popUpTo(0) { inclusive = true }
                         }
                     }) {
-                        Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "Cerrar Sesión")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ExitToApp,
+                            contentDescription = "Cerrar Sesión"
+                        )
                     }
                 }
             }
@@ -101,7 +108,9 @@ fun SettingsScreen(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.padding(top = 16.dp).fillMaxWidth()
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .fillMaxWidth()
                 ) {
                     Button(onClick = {
                         viewModel.changeLanguage("es")
