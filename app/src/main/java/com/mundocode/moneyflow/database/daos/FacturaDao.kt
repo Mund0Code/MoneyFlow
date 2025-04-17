@@ -17,6 +17,9 @@ interface FacturaDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFactura(factura: Factura)
 
+    @Update
+    suspend fun updateFactura(factura: Factura)
+
     @Delete
     suspend fun deleteFactura(factura: Factura)
 

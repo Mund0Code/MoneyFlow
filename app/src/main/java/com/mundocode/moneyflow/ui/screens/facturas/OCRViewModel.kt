@@ -54,19 +54,6 @@ class OCRViewModel @Inject constructor(
             }
     }
 
-    fun procesarImagenOCR(context: Context, uri: Uri) {
-        val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-        val image = InputImage.fromFilePath(context, uri)
-
-        recognizer.process(image)
-            .addOnSuccessListener { visionText ->
-                _facturaTexto.value = visionText.text
-            }
-            .addOnFailureListener {
-                _facturaTexto.value = context.getString(R.string.error_image)
-            }
-    }
-
     /**
      * Escanea un código de barras en una imagen.
      */

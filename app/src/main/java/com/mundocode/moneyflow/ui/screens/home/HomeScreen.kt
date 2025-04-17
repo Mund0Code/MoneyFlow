@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mundocode.moneyflow.R
+import com.mundocode.moneyflow.core.TipoTransaccion
 import com.mundocode.moneyflow.database.entity.Transaccion
 import java.text.NumberFormat
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
@@ -193,7 +194,12 @@ fun ListaTransacciones(transacciones: List<Transaccion>) {
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                     ) {
                         Column(modifier = Modifier.padding(8.dp)) { // ✅ Column para organizar
-                            Text("${stringResource(R.string.type)}: ${transaccion.tipo}", fontWeight = FontWeight.Bold)
+                            val tipoTraducido = when (transaccion.tipo) {
+                                TipoTransaccion.INGRESO -> stringResource(R.string.income)
+                                TipoTransaccion.GASTO -> stringResource(R.string.expense)
+                                else -> transaccion.tipo
+                            }
+                            Text("${stringResource(R.string.type)}: $tipoTraducido", fontWeight = FontWeight.Bold)
                             Text("${stringResource(R.string.amount)}: ${NumberFormat.getCurrencyInstance().format(transaccion.monto)}")
                             Text("${stringResource(R.string.date)}: ${transaccion.fecha}")
                         }

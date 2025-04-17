@@ -179,7 +179,7 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
         showDialog = mostrarDialogo,
         onDismiss = { mostrarDialogo = false },
         onConfirm = { tipo, monto ->
-            viewModel.agregarTransaccion(tipo, monto, SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
+            viewModel.agregarTransaccion(tipo, context, monto, SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
             mostrarDialogo = false
         }
     )

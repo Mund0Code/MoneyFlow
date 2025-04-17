@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mundocode.moneyflow.R
+import com.mundocode.moneyflow.core.TipoTransaccion
 import com.mundocode.moneyflow.database.daos.TransaccionDao
 import com.mundocode.moneyflow.database.entity.Transaccion
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,11 +58,11 @@ class TransaccionViewModel @Inject constructor(
         )
     }
 
-    fun agregarTransaccion(tipo: String, monto: Double, categoria: String) {
+    fun agregarTransaccion(tipo: String, context: Context, monto: Double, categoria: String) {
         viewModelScope.launch {
             val nuevaTransaccion = Transaccion(
                 id = UUID.randomUUID().toString(),
-                tipo = tipo,
+                tipo = if (tipo == context.getString(R.string.income)) TipoTransaccion.INGRESO else TipoTransaccion.GASTO,
                 monto = monto,
                 fecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
                 categoria = categoria,

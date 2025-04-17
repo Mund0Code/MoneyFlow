@@ -81,6 +81,16 @@ class FacturaViewModel @Inject constructor(
         }
     }
 
+    fun actualizarEstadoFactura(facturaActualizada: Factura) {
+        viewModelScope.launch(Dispatchers.IO) {
+            facturaDao.updateFactura(facturaActualizada)
+            db.collection("facturas").document(facturaActualizada.id).set(facturaActualizada)
+            _facturaSeleccionada.emit(facturaActualizada)
+        }
+    }
+
+
+
     fun guardarFactura(clienteId: String, clienteNombre: String, monto: Double, detalles: List<String>) {
         val id = UUID.randomUUID().toString()
         val fecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())

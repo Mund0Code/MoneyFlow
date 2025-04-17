@@ -122,7 +122,7 @@ fun AgregarTransaccionScreen(viewModel: TransaccionViewModel = hiltViewModel(), 
             Button(
                 onClick = {
                     if (monto.isNotEmpty() && monto.toDoubleOrNull() != null) {
-                        viewModel.agregarTransaccion(tipo, monto.toDouble(), categoria.trim())
+                        viewModel.agregarTransaccion(tipo, context,monto.toDouble(), categoria.trim())
                         navController.popBackStack()
                     } else {
                         errorMessage = context.getString(R.string.valid_mount)
