@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -47,28 +48,46 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.mundocode.moneyflow.ui.screens.onBoarding.OnboardingViewModel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.P)
 @Composable
-fun LoginScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavController) {
+fun LoginScreen(
+    viewModel: AuthViewModel = hiltViewModel(),
+    onboardingViewModel: OnboardingViewModel = hiltViewModel(), // ✅
+    navController: NavController
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .background(MaterialTheme.colorScheme.background),
+                .padding(paddingValues),
             contentAlignment = Alignment.Center
         ) {
             LoginContent(
                 iniciarSesion = {
                     viewModel.iniciarSesion(email, password) { success ->
                         if (success) {
-                            navController.navigate("home")
+                            scope.launch {
+                                val isCompleted = onboardingViewModel.isCompleted.first()
+                                if (isCompleted) {
+                                    navController.navigate("home") {
+                                        popUpTo("login") { inclusive = true }
+                                    }
+                                } else {
+                                    navController.navigate("onboarding") {
+                                        popUpTo("login") { inclusive = true }
+                                    }
+                                }
+                            }
                         } else {
                             error = context.getString(R.string.error_login_user)
                         }
@@ -84,6 +103,7 @@ fun LoginScreen(viewModel: AuthViewModel = hiltViewModel(), navController: NavCo
         }
     }
 }
+
 
 
 @Composable

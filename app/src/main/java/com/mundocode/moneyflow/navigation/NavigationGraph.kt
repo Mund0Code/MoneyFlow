@@ -20,6 +20,7 @@ import com.mundocode.moneyflow.ui.screens.gananciasGastos.DetalleTransaccionScre
 import com.mundocode.moneyflow.ui.screens.gananciasGastos.GananciasGastosScreen
 import com.mundocode.moneyflow.ui.screens.gananciasGastos.ListaTransaccionesScreen
 import com.mundocode.moneyflow.ui.screens.home.HomeScreen
+import com.mundocode.moneyflow.ui.screens.onBoarding.OnboardingScreen
 import com.mundocode.moneyflow.ui.screens.proyectos.ProyectosScreen
 import com.mundocode.moneyflow.ui.screens.settings.SettingsScreen
 
@@ -31,6 +32,7 @@ fun NavigationGraph(
 ) {
     NavHost(navController, startDestination = "splash") {
         composable("splash") { SplashScreen(navController = navController) }
+        composable("onboarding") { OnboardingScreen(navController) }
         composable("login") { LoginScreen(navController = navController) }
         composable("register") { RegisterScreen(navController = navController) }
         composable("home") { HomeScreen(navController = navController) }
