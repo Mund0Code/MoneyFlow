@@ -16,9 +16,6 @@ class LanguageViewModel @Inject constructor(
     private val dataStore: LanguageDataStore
 ) : ViewModel() {
 
-    val languageFlow = dataStore.languageFlow
-        .stateIn(viewModelScope, SharingStarted.Lazily, "es")
-
     fun changeLanguage(languageCode: String) {
         viewModelScope.launch {
             dataStore.setLanguage(languageCode)

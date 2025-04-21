@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
@@ -153,9 +154,9 @@ fun FiltroPorCategoria(
     val categorias by viewModel.categoriasDisponibles.collectAsState(initial = listOf(stringResource(R.string.all)))
     var categoriaSeleccionada by remember { mutableStateOf(context.getString(R.string.all)) }
 
-    LazyColumn(
+    LazyRow(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(16.dp)
     ) {
 
