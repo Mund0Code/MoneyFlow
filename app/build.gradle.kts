@@ -138,35 +138,35 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
 
     //coil
-    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation(libs.coil.compose)
 
     // Dependencia de ML Kit para escaneo de códigos de barras
     implementation("com.google.mlkit:barcode-scanning:17.3.0")
 
     //Gson
-    implementation("com.google.code.gson:gson:2.12.1")
+    implementation(libs.gson)
 
-    implementation("androidx.biometric:biometric:1.1.0")
+    implementation(libs.androidx.biometric)
 
     implementation("org.slf4j:slf4j-api:2.0.4")
     implementation("org.slf4j:slf4j-simple:1.7.30") // O usa otra implementación como logback
 
 
     // Timber
-    implementation("com.jakewharton.timber:timber:5.0.1")
+    implementation(libs.timber)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.firebaseBundle)
 
     // Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.55")
-    ksp("com.google.dagger:hilt-compiler:2.55")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Acompanist
-    implementation("com.google.accompanist:accompanist-pager:0.34.0")
-    implementation("com.google.accompanist:accompanist-pager-indicators:0.34.0")
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
 
 }
 

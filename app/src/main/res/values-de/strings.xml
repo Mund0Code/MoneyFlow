@@ -146,4 +146,47 @@
     <string name="thanks">Vielen Dank für Ihren Kauf</string>
     <string name="error_image">Fehler bei der Verarbeitung des Bildes</string>
 
+    <!--ONBOARDING-->
+    <string name="onboarding_title_1">Willkommen bei MoneyFlow</string>
+    <string name="onboarding_description_1">Dein idealer Begleiter für eine unkomplizierte Finanzverwaltung. Erfasse, organisiere und verstehe deine Finanzen an einem Ort.</string>
+
+    <string name="onboarding_title_2">Setze deine Ziele</string>
+    <string name="onboarding_description_2">Setze dir klare finanzielle Ziele und MoneyFlow hilft dir, sie zu erreichen. Vom Sparen für eine Reise bis zum Abzahlen von Schulden.</string>
+
+    <string name="onboarding_title_3">Kontrolliere deine Ausgaben</string>
+    <string name="onboarding_description_3">Kategorisiere deine Ausgaben und erkenne genau, wofür du dein Geld ausgibst. Entdecke Muster und Gewohnheiten.</string>
+
+    <string name="onboarding_title_4">Analysiere deine Finanzen</string>
+    <string name="onboarding_description_4">Erhalte tiefgreifende Einblicke in deine finanziellen Gewohnheiten. Visualisiere Einnahmen und Ausgaben, erkenne Verbesserungspotenziale und plane strategisch.</string>
+
+    <string name="onboarding_title_5">Garantierte Sicherheit</string>
+    <string name="onboarding_description_5">Deine Finanzdaten sind nach höchsten Sicherheitsstandards geschützt. Deine Informationen sind bei uns immer sicher.</string>
+
+    <string name="onboarding_title_6">Startbildschirm (Dashboard)</string>
+    <string name="onboarding_description_6">Ein Überblick über deine Finanzen. Sieh deine Salden, Einnahmen-/Ausgabenzusammenfassungen, letzte Transaktionen, Ziele und Benachrichtigungen.</string>
+
+    <string name="onboarding_title_7">Transaktionen Bildschirm</string>
+    <string name="onboarding_description_7">Erfasse, verwalte und betrachte alle deine Transaktionen. Du kannst sie filtern, durchsuchen, hinzufügen, bearbeiten oder löschen.</string>
+
+    <string name="onboarding_title_8">Budget Bildschirm</string>
+    <string name="onboarding_description_8">Erstelle und verwalte deine individuellen Budgets. Setze Ausgabenlimits pro Kategorie und erhalte Warnungen, wenn du dich näherst.</string>
+
+    <string name="onboarding_title_9">Berichte/Analyse Bildschirm</string>
+    <string name="onboarding_description_9">Betrachte deine Finanzdaten mit interaktiven Diagrammen und Berichten. Analysiere Trends, Muster und vergleiche deine Finanzen.</string>
+
+    <string name="onboarding_title_10">Ziele Bildschirm</string>
+    <string name="onboarding_description_10">Setze finanzielle Ziele, verfolge deinen Fortschritt und bleib motiviert. MoneyFlow hilft dir, deine Ziele zu erreichen.</string>
+
+    <string name="onboarding_title_11">Einstellungen Bildschirm</string>
+    <string name="onboarding_description_11">Passe die App an, verwalte dein Konto, konfiguriere die Sicherheit, füge Bankkonten hinzu oder bearbeite sie und lege deine Präferenzen fest.</string>
+
+    <string name="onboarding_title_12">Login Bildschirm</string>
+    <string name="onboarding_description_12">Melde dich bei deinem Konto an, um alle Funktionen von MoneyFlow zu nutzen oder dein Passwort wiederherzustellen.</string>
+
+    <string name="onboarding_title_13">Registrierung Bildschirm</string>
+    <string name="onboarding_description_13">Erstelle dein neues Konto bei MoneyFlow. Du benötigst eine E-Mail-Adresse und ein Passwort zur Registrierung.</string>
+
+    <string name="onboarding_title_14">Bereit loszulegen?</string>
+    <string name="onboarding_description_14">Übernimm die Kontrolle über deine Finanzen und beginne mit dem Aufbau einer soliden finanziellen Zukunft mit MoneyFlow.</string>
+
 </resources>

@@ -16,6 +16,8 @@ import androidx.compose.foundation.pager.rememberPagerState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.pager.PagerState
+import androidx.compose.ui.res.stringResource
+import com.mundocode.moneyflow.R
 
 data class OnboardingPage(val icon: String, val title: String, val description: String)
 
@@ -25,9 +27,76 @@ fun OnboardingScreen(
     viewModel: OnboardingViewModel = hiltViewModel()
 ) {
     val pages = listOf(
-        OnboardingPage("📱", "Bienvenido", "Tu app financiera para organizar tus ingresos y gastos."),
-        OnboardingPage("💰", "Controla tus gastos", "Categoriza, analiza y predice tus finanzas."),
-        OnboardingPage("📊", "Toma decisiones", "Basado en tus datos reales.")
+        OnboardingPage(
+            icon = "👋",
+            title = stringResource(R.string.onboarding_title_1),
+            description = stringResource(R.string.onboarding_description_1)
+        ),
+        OnboardingPage(
+            icon = "🎯",
+            title = stringResource(R.string.onboarding_title_2),
+            description = stringResource(R.string.onboarding_description_2)
+        ),
+        OnboardingPage(
+            icon = "💰",
+            title = stringResource(R.string.onboarding_title_3),
+            description = stringResource(R.string.onboarding_description_3)
+        ),
+        OnboardingPage(
+            icon = "📊",
+            title = stringResource(R.string.onboarding_title_4),
+            description = stringResource(R.string.onboarding_description_4)
+        ),
+        OnboardingPage(
+            icon = "🛡️",
+            title = stringResource(R.string.onboarding_title_5),
+            description = stringResource(R.string.onboarding_description_5)
+        ),
+        OnboardingPage(
+            icon = "🏠",
+            title = stringResource(R.string.onboarding_title_6),
+            description = stringResource(R.string.onboarding_description_6)
+        ),
+        OnboardingPage(
+            icon = "🔄",
+            title = stringResource(R.string.onboarding_title_7),
+            description = stringResource(R.string.onboarding_description_7)
+        ),
+        OnboardingPage(
+            icon = "📊",
+            title = stringResource(R.string.onboarding_title_8),
+            description = stringResource(R.string.onboarding_description_8)
+        ),
+        OnboardingPage(
+            icon = "📈",
+            title = stringResource(R.string.onboarding_title_9),
+            description = stringResource(R.string.onboarding_description_9)
+        ),
+        OnboardingPage(
+            icon = "🎯",
+            title = stringResource(R.string.onboarding_title_10),
+            description = stringResource(R.string.onboarding_description_10)
+        ),
+        OnboardingPage(
+            icon = "⚙️",
+            title = stringResource(R.string.onboarding_title_11),
+            description = stringResource(R.string.onboarding_description_11)
+        ),
+        OnboardingPage(
+            icon = "🔑",
+            title = stringResource(R.string.onboarding_title_12),
+            description = stringResource(R.string.onboarding_description_12)
+        ),
+        OnboardingPage(
+            icon = "📝",
+            title = stringResource(R.string.onboarding_title_13),
+            description = stringResource(R.string.onboarding_description_13)
+        ),
+        OnboardingPage(
+            icon = "🚀",
+            title = stringResource(R.string.onboarding_title_14),
+            description = stringResource(R.string.onboarding_description_14)
+        )
     )
 
     val pagerState = rememberPagerState(
