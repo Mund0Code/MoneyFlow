@@ -25,12 +25,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.mundocode.moneyflow.LanguageViewModel
 import com.mundocode.moneyflow.R
 import com.mundocode.moneyflow.ThemeViewModel
 import com.mundocode.moneyflow.ui.components.BottomNavigationBar
@@ -41,7 +39,6 @@ import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 fun SettingsScreen(
     themeViewModel: ThemeViewModel = hiltViewModel(),
     navController: NavHostController,
-    viewModel: LanguageViewModel = hiltViewModel(),
 ) {
     val isDarkMode by themeViewModel.isDarkMode.collectAsState()
 
@@ -91,50 +88,6 @@ fun SettingsScreen(
                     }
                 }
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Column(modifier = Modifier.padding(16.dp)) {
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(stringResource(id = R.string.actualLanguaje), fontSize = 20.sp)
-                    Text(stringResource(id = R.string.language), fontSize = 20.sp)
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .fillMaxWidth()
-                ) {
-                    Button(onClick = {
-                        viewModel.changeLanguage("es")
-                        viewModel.restartApp(context)
-                    }) {
-                        Text("Español")
-                    }
-
-                    Button(onClick = {
-                        viewModel.changeLanguage("en")
-                        viewModel.restartApp(context)
-                    }) {
-                        Text("English")
-                    }
-
-                    Button(onClick = {
-                        viewModel.changeLanguage("de")
-                        viewModel.restartApp(context)
-                    }) {
-                        Text("Deutsch")
-                    }
-                }
-            }
-
         }
     }
 }

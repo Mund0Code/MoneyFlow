@@ -176,6 +176,7 @@ fun LoginContent(
                             )
                         },
                         modifier = Modifier
+
                             .fillMaxWidth()
                             .clickable {
                                 expanded = !expanded
