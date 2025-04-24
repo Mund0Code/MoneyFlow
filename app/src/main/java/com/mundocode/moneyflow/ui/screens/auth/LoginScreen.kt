@@ -3,7 +3,6 @@ package com.mundocode.moneyflow.ui.screens.auth
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.mundocode.moneyflow.R
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,11 +17,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -47,7 +51,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.firebase.auth.FirebaseAuth
+import com.mundocode.moneyflow.LanguageViewModel
 import com.mundocode.moneyflow.ui.screens.onBoarding.OnboardingViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -56,14 +60,16 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    onboardingViewModel: OnboardingViewModel = hiltViewModel(), // ✅
-    navController: NavController
+    onboardingViewModel: OnboardingViewModel = hiltViewModel(),
+    navController: NavController,
+    langViewModel: LanguageViewModel = hiltViewModel(),
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    var estado by remember { mutableStateOf(context.getString(R.string.language)) }
 
     Scaffold { paddingValues ->
         Box(
@@ -98,14 +104,27 @@ fun LoginScreen(
                 error = error,
                 onValueChangeE = { email = it },
                 onValueChangeP = { password = it },
-                navcontroller = { navController.navigate("register") }
+                navcontroller = { navController.navigate("register") },
+                languageEsViewModel = {
+                    langViewModel.changeLanguage("es")
+                    langViewModel.restartApp(context)
+                },
+                languageEnViewModel = {
+                    langViewModel.changeLanguage("en")
+                    langViewModel.restartApp(context)
+                },
+                languageDeViewModel = {
+                    langViewModel.changeLanguage("de")
+                    langViewModel.restartApp(context)
+                },
+                estado = estado
             )
         }
     }
 }
 
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginContent(
     iniciarSesion: () -> Unit,
@@ -115,6 +134,10 @@ fun LoginContent(
     onValueChangeE: (String) -> Unit,
     onValueChangeP: (String) -> Unit,
     navcontroller: () -> Unit,
+    languageEsViewModel: () -> Unit,
+    languageEnViewModel: () -> Unit,
+    languageDeViewModel: () -> Unit,
+    estado: String,
 ) {
     Card(
         modifier = Modifier
@@ -128,6 +151,67 @@ fun LoginContent(
             modifier = Modifier.padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            Box(
+                modifier = Modifier
+                    .width(150.dp)
+                    .padding(bottom = 16.dp).align(Alignment.End),
+            ) {
+
+                var expanded by remember { mutableStateOf(false) }
+
+                ExposedDropdownMenuBox(
+                    expanded = expanded,
+                    onExpandedChange = { expanded = !expanded }
+                ) {
+                    OutlinedTextField(
+                        value = estado,
+                        onValueChange = {}, // No editable manualmente
+                        readOnly = true,
+                        label = { Text(stringResource(R.string.lang)) },
+                        trailingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.ArrowDropDown,
+                                contentDescription = "Abrir selector"
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                expanded = !expanded
+                            } // <-- aquí se asegura que se abra desde todo el campo
+                    )
+
+                    DropdownMenu(
+                        modifier = Modifier.width(150.dp),
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Español") },
+                            onClick = {
+                                languageEsViewModel()
+                                expanded = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("English") },
+                            onClick = {
+                                languageEnViewModel()
+                                expanded = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Deutsch") },
+                            onClick = {
+                                languageDeViewModel()
+                                expanded = false
+                            }
+                        )
+                    }
+                }
+            }
+
             Icon(
                 imageVector = Icons.Default.AccountCircle,
                 contentDescription = "Login",
@@ -208,6 +292,10 @@ fun LoginScreenPreview() {
         error = null,
         onValueChangeE = {},
         onValueChangeP = {},
-        navcontroller = {}
+        navcontroller = {},
+        languageEsViewModel = {},
+        languageEnViewModel = {},
+        languageDeViewModel = {},
+        estado = "Español"
     )
 }

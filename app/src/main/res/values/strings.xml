@@ -188,5 +188,6 @@
 
     <string name="onboarding_title_14">¿Listo para Empezar?</string>
     <string name="onboarding_description_14">Toma el control de tus finanzas y comienza a construir un futuro financiero sólido con MoneyFlow.</string>
+    <string name="lang">Idioma</string>
 
 </resources>

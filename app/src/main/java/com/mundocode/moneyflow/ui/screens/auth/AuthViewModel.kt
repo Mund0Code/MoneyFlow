@@ -12,18 +12,10 @@ class AuthViewModel @Inject constructor(
     private val firestore: FirebaseFirestore
 ) : ViewModel() {
 
-    fun obtenerRolUsuario() {
-        val userId = auth.currentUser?.uid
-        userId?.let {
-            firestore.collection("users").document(it).get()
-        }
-    }
-
     fun iniciarSesion(email: String, password: String, onResult: (Boolean) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    obtenerRolUsuario()
                     onResult(true)
                 } else {
                     onResult(false)
