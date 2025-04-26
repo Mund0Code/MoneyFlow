@@ -37,7 +37,7 @@ fun NavigationGraph(
         composable("register") { RegisterScreen(navController = navController) }
         composable("home") { HomeScreen(navController = navController) }
         composable("clientes") { ClientesScreen(navController = navController) }
-        composable("calendario") { CalendarScreen(themeViewModel, navController = navController) }
+        composable("calendario") { CalendarScreen(navController = navController) }
         composable("proyectos") { ProyectosScreen(navController = navController) }
         composable("ganancias_gastos") { GananciasGastosScreen(navController = navController) }
         composable("facturas") { ListaFacturasScreen(navController = navController) } // 🆕 Nueva pantalla

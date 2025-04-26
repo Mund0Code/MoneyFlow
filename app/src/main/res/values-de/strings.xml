@@ -189,5 +189,7 @@
     <string name="onboarding_title_14">Bereit loszulegen?</string>
     <string name="onboarding_description_14">Übernimm die Kontrolle über deine Finanzen und beginne mit dem Aufbau einer soliden finanziellen Zukunft mit MoneyFlow.</string>
     <string name="lang">Spache</string>
+    <string name="no_events">Für dieses Datum gibt es keine Veranstaltungen</string>
+    <string name="events_of_day">Ausgewähltes Datum:</string>
 
 </resources>

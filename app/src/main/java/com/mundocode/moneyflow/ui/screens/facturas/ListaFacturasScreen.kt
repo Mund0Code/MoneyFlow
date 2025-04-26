@@ -58,7 +58,7 @@ fun ListaFacturasScreen(viewModel: FacturaViewModel = hiltViewModel(), navContro
             FloatingActionButton(
                 onClick = { navController.navigate("crear_factura") },
                 containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = Color.White
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Nueva Factura")
             }

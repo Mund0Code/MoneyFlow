@@ -189,5 +189,7 @@
     <string name="onboarding_title_14">Ready to Get Started?</string>
     <string name="onboarding_description_14">Take control of your finances and start building a solid financial future with MoneyFlow.</string>
     <string name="lang">Languege</string>
+    <string name="no_events">There are no events for this date</string>
+    <string name="events_of_day">Selected Date:</string>
 
 </resources>
