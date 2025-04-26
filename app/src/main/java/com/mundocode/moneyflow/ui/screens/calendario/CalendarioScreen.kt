@@ -1,35 +1,76 @@
 package com.mundocode.moneyflow.ui.screens.calendario
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.mundocode.moneyflow.ThemeViewModel
-import com.mundocode.moneyflow.database.entity.Evento
-import com.mundocode.moneyflow.ui.components.BottomNavigationBar
-import com.mundocode.moneyflow.ui.components.CustomTopAppBar
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.*
-import androidx.compose.foundation.shape.*
-import androidx.compose.material.icons.*
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mundocode.moneyflow.R
-import kotlinx.coroutines.launch
-import java.util.*
+import com.mundocode.moneyflow.database.entity.Evento
+import com.mundocode.moneyflow.ui.components.BottomNavigationBar
+import com.mundocode.moneyflow.ui.components.CustomTopAppBar
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -127,7 +168,7 @@ fun CalendarScreen(
                         evento = evento,
                         onClickDelete = { viewModel.eliminarEvento(evento) },
                         onClickEdit = { eventoSeleccionadoNuevo ->
-                            viewModel.seleccionarEvento(eventoSeleccionadoNuevo)
+                           viewModel.seleccionarEvento(evento) // 🎯 Cuando presionas "editar", guardas el evento aquí
                             mostrarDialogo = true
                         }
                     )
@@ -143,21 +184,29 @@ fun CalendarScreen(
             eventoExistente = eventoSeleccionado,
             onDismiss = {
                 mostrarDialogo = false
-                viewModel.limpiarEventoSeleccionado()
+                viewModel.limpiarEventoSeleccionado() // 🧹 Limpiamos el evento seleccionado siempre
             },
             onConfirm = { titulo, fecha, categoria ->
                 if (eventoSeleccionado != null) {
-                    viewModel.editarEvento(titulo, fecha, categoria)
-                    coroutineScope.launch {
-                        snackbarHostState.showSnackbar("✅ Evento actualizado")
-                    }
+                    // 🚀 Editar evento existente
+                    viewModel.editarEvento(
+                        eventoSeleccionado!!,
+                        titulo,
+                        fecha,
+                        categoria,
+                        context
+                    )
                 } else {
-                    viewModel.agregarEvento(titulo, fecha, categoria)
-                    coroutineScope.launch {
-                        snackbarHostState.showSnackbar("✅ Evento creado")
-                    }
+                    // ✨ Crear nuevo evento
+                    viewModel.agregarEvento(
+                        titulo,
+                        fecha,
+                        categoria,
+                        context
+                    )
                 }
                 mostrarDialogo = false
+                viewModel.limpiarEventoSeleccionado() // 🧹 Limpiamos el evento seleccionado siempre
             }
         )
     }

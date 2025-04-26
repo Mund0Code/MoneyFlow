@@ -6,6 +6,9 @@
 
     <!-- Permiso para la cámara -->
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+
 
     <!-- Permisos de almacenamiento (solo necesarios en Android 9 o menor) -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
@@ -25,7 +28,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MundoCode"
         tools:targetApi="31">
-
         <!-- FileProvider: Manejo seguro de archivos para la cámara -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -37,6 +39,7 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <receiver android:name=".ui.screens.calendario.EventReminderReceiver" />
 
 
         <activity
