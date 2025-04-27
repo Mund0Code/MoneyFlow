@@ -78,9 +78,9 @@ class TransaccionViewModel @Inject constructor(
             val pendientes = transaccionDao.getTransaccionesNoSincronizadas().firstOrNull() ?: emptyList()
             for (transaccion in pendientes) {
                 val usuarioId = FirebaseAuth.getInstance().currentUser?.uid ?: continue
-                firestore.collection("usuarios")
+                firestore.collection("transactions") // 👈 CAMBIADO a transactions
                     .document(usuarioId)
-                    .collection("transacciones")
+                    .collection("transacciones") // puedes dejarlo como transacciones o cambiar a otro nombre si quieres
                     .document(transaccion.id)
                     .set(transaccion)
                     .addOnSuccessListener {
@@ -96,11 +96,12 @@ class TransaccionViewModel @Inject constructor(
         viewModelScope.launch {
             transaccionDao.deleteTransaccion(transaccion)
             val usuarioId = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
-            firestore.collection("usuarios")
+            firestore.collection("transactions") // 👈 también corregido aquí
                 .document(usuarioId)
                 .collection("transacciones")
                 .document(transaccion.id)
                 .delete()
         }
     }
+
 }
