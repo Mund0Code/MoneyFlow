@@ -27,6 +27,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -42,6 +43,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -139,6 +142,9 @@ fun LoginContent(
     languageDeViewModel: () -> Unit,
     estado: String,
 ) {
+
+    val focusRequester = remember { FocusRequester() }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -169,18 +175,10 @@ fun LoginContent(
                         onValueChange = {}, // No editable manualmente
                         readOnly = true,
                         label = { Text(stringResource(R.string.lang)) },
-                        trailingIcon = {
-                            Icon(
-                                imageVector = Icons.Default.ArrowDropDown,
-                                contentDescription = "Abrir selector"
-                            )
-                        },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
                         modifier = Modifier
-
                             .fillMaxWidth()
-                            .clickable {
-                                expanded = !expanded
-                            } // <-- aquí se asegura que se abra desde todo el campo
+                            .menuAnchor() // IMPORTANTE: esto sí se necesita
                     )
 
                     DropdownMenu(

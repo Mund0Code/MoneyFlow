@@ -83,16 +83,6 @@ fun OnboardingScreen(
             description = stringResource(R.string.onboarding_description_11)
         ),
         OnboardingPage(
-            icon = "🔑",
-            title = stringResource(R.string.onboarding_title_12),
-            description = stringResource(R.string.onboarding_description_12)
-        ),
-        OnboardingPage(
-            icon = "📝",
-            title = stringResource(R.string.onboarding_title_13),
-            description = stringResource(R.string.onboarding_description_13)
-        ),
-        OnboardingPage(
             icon = "🚀",
             title = stringResource(R.string.onboarding_title_14),
             description = stringResource(R.string.onboarding_description_14)
