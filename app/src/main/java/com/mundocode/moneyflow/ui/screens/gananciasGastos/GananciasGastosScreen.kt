@@ -32,6 +32,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -79,7 +81,10 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), navController: NavHostController) {
+fun GananciasGastosScreen(
+    viewModel: TransaccionViewModel = hiltViewModel(),
+    navController: NavHostController,
+) {
     val transacciones by viewModel.transacciones.collectAsState(initial = emptyList())
     var mostrarDialogo by remember { mutableStateOf(false) }
     val context = LocalContext.current // Obtener el contexto para mostrar Toast
@@ -99,13 +104,13 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
                 .padding(paddingValues)
         ) {
 
-                Button(
-                    onClick = {
-                        navController.navigate("scanfacturascreen")
-                    }
-                ) {
-                    Text(stringResource(R.string.scan_invoice))
+            Button(
+                onClick = {
+                    navController.navigate("scanfacturascreen")
                 }
+            ) {
+                Text(stringResource(R.string.scan_invoice))
+            }
 
             LazyColumn(
                 modifier = Modifier
@@ -179,7 +184,12 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
         showDialog = mostrarDialogo,
         onDismiss = { mostrarDialogo = false },
         onConfirm = { tipo, monto ->
-            viewModel.agregarTransaccion(tipo, context, monto, SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
+            viewModel.agregarTransaccion(
+                tipo,
+                context,
+                monto,
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+            )
             mostrarDialogo = false
         }
     )
@@ -187,15 +197,29 @@ fun GananciasGastosScreen(viewModel: TransaccionViewModel = hiltViewModel(), nav
 
 
 fun exportarPDF(transacciones: List<Transaccion>, context: Context) {
-    val pdfFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Financial-report.pdf")
+    val pdfFile = File(
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+        "Financial-report.pdf"
+    )
 
     try {
         val writer = PdfWriter(pdfFile)
         val pdfDocument = PdfDocument(writer)
         val document = Document(pdfDocument)
 
-        document.add(Paragraph(context.getString(R.string.financial_report)).setBold().setFontSize(18f))
-        document.add(Paragraph("${context.getString(R.string.date)}: ${SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())}"))
+        document.add(
+            Paragraph(context.getString(R.string.financial_report)).setBold().setFontSize(18f)
+        )
+        document.add(
+            Paragraph(
+                "${context.getString(R.string.date)}: ${
+                    SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(Date())
+                }"
+            )
+        )
 
         val table = Table(floatArrayOf(1f, 2f)).useAllAvailableWidth()
         table.addHeaderCell(Cell().add(Paragraph(context.getString(R.string.type))))
@@ -210,7 +234,11 @@ fun exportarPDF(transacciones: List<Transaccion>, context: Context) {
         document.close()
 
         CoroutineScope(Dispatchers.Main).launch {
-            Toast.makeText(context, "${context.getString(R.string.pdf_generated)} ${pdfFile.absolutePath}", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                context,
+                "${context.getString(R.string.pdf_generated)} ${pdfFile.absolutePath}",
+                Toast.LENGTH_LONG
+            ).show()
         }
     } catch (e: Exception) {
         e.printStackTrace()
@@ -219,7 +247,10 @@ fun exportarPDF(transacciones: List<Transaccion>, context: Context) {
 }
 
 fun exportarExcel(transacciones: List<Transaccion>, context: Context) {
-    val excelFile = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), "Reporte_Financiero.xlsx")
+    val excelFile = File(
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+        "Reporte_Financiero.xlsx"
+    )
 
     try {
         val workbook = XSSFWorkbook()
@@ -244,7 +275,11 @@ fun exportarExcel(transacciones: List<Transaccion>, context: Context) {
 
         // Mostrar Toast en el hilo principal
         CoroutineScope(Dispatchers.Main).launch {
-            Toast.makeText(context, "${context.getString(R.string.excel_generated)} ${excelFile.absolutePath}", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                context,
+                "${context.getString(R.string.excel_generated)} ${excelFile.absolutePath}",
+                Toast.LENGTH_LONG
+            ).show()
         }
     } catch (e: Exception) {
         e.printStackTrace()
@@ -253,8 +288,13 @@ fun exportarExcel(transacciones: List<Transaccion>, context: Context) {
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTransactionDialog(showDialog: Boolean, onDismiss: () -> Unit, onConfirm: (String, Double) -> Unit) {
+fun AddTransactionDialog(
+    showDialog: Boolean,
+    onDismiss: () -> Unit,
+    onConfirm: (String, Double) -> Unit,
+) {
     if (showDialog) {
         val keyboardController = LocalSoftwareKeyboardController.current
         Dialog(onDismissRequest = onDismiss) {
@@ -279,27 +319,44 @@ fun AddTransactionDialog(showDialog: Boolean, onDismiss: () -> Unit, onConfirm: 
                         }
                     }
 
-                    Text(stringResource(R.string.add_transaction), fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                    Text(
+                        stringResource(R.string.add_transaction),
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
 
                     Box(modifier = Modifier.fillMaxWidth()) {
                         Column {
-                            OutlinedTextField(
-                                value = tipo,
-                                onValueChange = {},
-                                label = { Text(stringResource(R.string.type)) },
-                                readOnly = true,
-                                modifier = Modifier.fillMaxWidth().clickable { expanded = true }
-                            )
-                            AnimatedVisibility(visible = expanded, enter = fadeIn(), exit = fadeOut()) {
-                                DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                                    DropdownMenuItem(text = { Text(stringResource(R.string.income)) }, onClick = {
-                                        tipo = context.getString(R.string.income)
-                                        expanded = false
-                                    })
-                                    DropdownMenuItem(text = { Text(stringResource(R.string.expense)) }, onClick = {
-                                        tipo = context.getString(R.string.expense)
-                                        expanded = false
-                                    })
+                            ExposedDropdownMenuBox(
+                                expanded = expanded,
+                                onExpandedChange = { expanded = !expanded }
+                            ) {
+                                OutlinedTextField(
+                                    value = tipo,
+                                    onValueChange = {},
+                                    label = { Text(stringResource(R.string.type)) },
+                                    readOnly = true,
+                                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .menuAnchor()
+                                )
+                                DropdownMenu(
+                                    modifier = Modifier.width(250.dp),
+                                    expanded = expanded,
+                                    onDismissRequest = { expanded = false }) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.income)) },
+                                        onClick = {
+                                            tipo = context.getString(R.string.income)
+                                            expanded = false
+                                        })
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.expense)) },
+                                        onClick = {
+                                            tipo = context.getString(R.string.expense)
+                                            expanded = false
+                                        })
                                 }
                             }
                         }
@@ -323,7 +380,9 @@ fun AddTransactionDialog(showDialog: Boolean, onDismiss: () -> Unit, onConfirm: 
                         Text(errorMessage, color = Color.Red, modifier = Modifier.padding(4.dp))
                     }
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
                         Button(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
@@ -333,13 +392,20 @@ fun AddTransactionDialog(showDialog: Boolean, onDismiss: () -> Unit, onConfirm: 
                                     isLoading = true
                                     triggerSave = true
                                 } else {
-                                    errorMessage = context.getString( R.string.valid_mount)
+                                    errorMessage = context.getString(R.string.valid_mount)
                                 }
                             },
                             enabled = monto.isNotEmpty() && monto.toDoubleOrNull() != null
                         ) {
-                            AnimatedVisibility(visible = isLoading, enter = fadeIn(), exit = fadeOut()) {
-                                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp))
+                            AnimatedVisibility(
+                                visible = isLoading,
+                                enter = fadeIn(),
+                                exit = fadeOut()
+                            ) {
+                                CircularProgressIndicator(
+                                    color = Color.White,
+                                    modifier = Modifier.size(20.dp)
+                                )
                             }
                             if (!isLoading) {
                                 Text(stringResource(id = R.string.save))

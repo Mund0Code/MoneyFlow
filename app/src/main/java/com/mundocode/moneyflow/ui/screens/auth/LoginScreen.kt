@@ -143,8 +143,6 @@ fun LoginContent(
     estado: String,
 ) {
 
-    val focusRequester = remember { FocusRequester() }
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
