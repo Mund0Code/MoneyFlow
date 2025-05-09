@@ -1,3 +1,5 @@
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Mund0Code/MoneyFlow)
+
 # 🚀 MoneyFlow - Gestión Financiera y Facturación 📊
 
 ### Aplicación de gestión financiera y facturación con soporte offline y sincronización en la nube.
