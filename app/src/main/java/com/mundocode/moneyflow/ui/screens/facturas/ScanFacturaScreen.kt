@@ -121,5 +121,5 @@ fun ScanFacturaScreen(viewModel: OCRViewModel = hiltViewModel(), navController: 
  */
 fun getImageUri(context: Context): Uri {
     val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "captured.jpg")
-    return FileProvider.getUriForFile(context, "com.mundocode.mundocode.provider", file)
+    return FileProvider.getUriForFile(context, "com.mundocode.moneyflow.provider", file)
 }

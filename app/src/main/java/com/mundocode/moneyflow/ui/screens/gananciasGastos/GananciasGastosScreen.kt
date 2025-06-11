@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,9 +43,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -58,6 +57,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.itextpdf.io.font.constants.StandardFonts
+import com.itextpdf.kernel.font.PdfFontFactory
 import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfWriter
 import com.itextpdf.layout.Document
@@ -207,9 +208,14 @@ fun exportarPDF(transacciones: List<Transaccion>, context: Context) {
         val pdfDocument = PdfDocument(writer)
         val document = Document(pdfDocument)
 
-        document.add(
-            Paragraph(context.getString(R.string.financial_report)).setBold().setFontSize(18f)
-        )
+        val boldFont = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD)
+
+        // Add title with bold font
+        val title = Paragraph(context.getString(R.string.financial_report))
+            .setFont(boldFont) // Apply bold font
+            .setFontSize(18f)
+        document.add(title)
+
         document.add(
             Paragraph(
                 "${context.getString(R.string.date)}: ${
@@ -336,7 +342,11 @@ fun AddTransactionDialog(
                                     onValueChange = {},
                                     label = { Text(stringResource(R.string.type)) },
                                     readOnly = true,
-                                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
+                                    trailingIcon = {
+                                        ExposedDropdownMenuDefaults.TrailingIcon(
+                                            expanded
+                                        )
+                                    },
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .menuAnchor()

@@ -15,12 +15,12 @@ plugins {
 
 android {
     namespace = "com.mundocode.moneyflow"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.mundocode.moneyflow"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -148,8 +148,8 @@ dependencies {
 
     implementation(libs.androidx.biometric)
 
-    implementation("org.slf4j:slf4j-api:2.0.4")
-    implementation("org.slf4j:slf4j-simple:1.7.30") // O usa otra implementación como logback
+    implementation("org.slf4j:slf4j-api:2.0.17")
+    implementation("org.slf4j:slf4j-simple:2.0.17") // O usa otra implementación como logback
 
 
     // Timber
